@@ -1,2 +1,81 @@
 @use "./variables" as *;
 @use "./reset" as *;
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+:root {
+    // 1. Backgrounds & Surfaces
+    --bg-main: #f8fafc; // Світло-сірий фон сайту
+    --bg-surface: #ffffff; // Чисто білі картки та модалки
+    --bg-surface-light: #e2e8f0; // Світло-сірий для скролбару та плашок (Slate 200)
+
+    // 2. Accents
+    --accent-primary: #2563eb; // Базовий синій (Blue 600)
+    --accent-hover: #1d4ed8; // Темніший синій при наведенні (Blue 700)
+    --accent-active: #1e40af; // Ще темніший при кліку (Blue 800)
+
+    // 3. UI Elements
+    --border-color: #e2e8f0; // Стандартний м'який бордер (Slate 200)
+    --border-hover: #94a3b8; // Бордер при наведенні або фокусі (Slate 400)
+
+    // 4. Text Colors
+    --text-primary: #0f172a; // Майже чорний для заголовків (Slate 900)
+    --text-secondary: #64748b; // Сірий для описів (Slate 500)
+    --text-muted: #94a3b8; // Світло-сірий для плейсхолдерів (Slate 400)
+    --text-inverse: #ffffff; // Білий текст на синіх кнопках
+
+    // 5. States
+    --error: #ef4444;
+    --error-bg: rgba(239, 68, 68, 0.1);
+    --success: #10b981;
+    --warning: #f59e0b;
+}
+
+body {
+    font-family: $font-primary;
+    font-size: $fz-main;
+    color: var(--text-primary);
+    background-color: var(--bg-main);
+    line-height: $lh-base;
+    margin: 0;
+    padding: 0;
+}
+
+*:focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
+    border-radius: $border-radius-sm;
+}
+
+::selection {
+    background-color: var(--accent-primary);
+    color: var(--text-inverse);
+}
+
+// --- Scrollbar ---
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg-main);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--bg-surface-light);
+    border-radius: $border-radius;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--border-hover);
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    border: 0;
+    padding: 0;
+    white-space: nowrap;
+    clip-path: inset(100%);
+    clip: rect(0 0 0 0);
+    overflow: hidden;
+}

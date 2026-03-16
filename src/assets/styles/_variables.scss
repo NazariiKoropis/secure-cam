@@ -1,0 +1,32 @@
+// --- Typography ---
+$font-primary: "Montserrat", sans-serif;
+
+// Font Sizes (fz)
+$fz-small: 0.8rem;
+$fz-main: 18px;
+$fz-h3: 1.5rem;
+$fz-h2: 2rem;
+$fz-h1: 3rem;
+
+// Font Weights
+$fw-regular: 400;
+$fw-medium: 500;
+$fw-semibold: 600;
+$fw-bold: 700;
+
+// Line Heights
+$lh-small: 1.2;
+$lh-base: 1.5;
+$lh-big: 1.8;
+
+// --- Spacing & Radius ---
+$border-radius-sm: 4px;
+$border-radius: 8px;
+$border-radius-lg: 12px;
+$border-radius-round: 50%;
+
+// --- Breakpoints ---
+$mobile: 480px;
+$tablet: 768px;
+$laptop: 1024px;
+$desktop: 1440px;
