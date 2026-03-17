@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 60" fill="none">
+  <path d="M 30 8 L 10 16 V 32 C 10 44 18 52 30 56 C 42 52 50 44 50 32 V 16 L 30 8 Z" 
+        stroke="#2563eb" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <circle cx="30" cy="33" r="9" stroke="#0f172a" stroke-width="3"/>
+  <circle cx="30" cy="33" r="3.5" fill="#2563eb"/>
+  
+  <circle cx="42" cy="22" r="2.5" fill="#ef4444"/>
+  
+  <text x="65" y="42" font-family="Montserrat, sans-serif" font-weight="700" font-size="28">
+    <tspan fill="#0f172a">Secure</tspan>
+    <tspan fill="#2563eb">Cam</tspan>
+  </text>
+</svg>
