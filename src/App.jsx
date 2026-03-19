@@ -1,8 +1,27 @@
+//router-dom
+import { Route, Routes } from 'react-router-dom'
+
+//pages
+import Home from '@pages/home/Home'
+import Catalog from '@pages/catalog/Catalog'
+import Calculator from '@pages/calculator/Calculator'
+import NotFound from '@pages/not-found/NotFound'
+
+//routes
+
+//components
+import Layout from '@layout/Layout'
+
 function App() {
   return (
-    <>
-      <div>1</div>
-    </>
+    <Routes>
+      <Route element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route path="catalog" element={<Catalog />} />
+        <Route path="calculator" element={<Calculator />} />
+        <Route path="*" element={<NotFound />} />
+      </Route>
+    </Routes>
   )
 }
 
