@@ -18,10 +18,13 @@ import BurgerMenu from './blocks/burger-menu/BurgerMenu'
 //util
 import clsx from 'clsx'
 
+//constants
+import { ROUTES } from '@constants/routes'
+
 const NAV_ITEMS = [
-  { path: '/', label: 'Головна' },
-  { path: '/catalog', label: 'Каталог' },
-  { path: '/calculator', label: 'Калькулятор' },
+  { path: ROUTES.HOME, label: 'Головна' },
+  { path: ROUTES.CATALOG, label: 'Каталог' },
+  { path: ROUTES.CALCULATOR, label: 'Калькулятор' },
 ]
 
 function Header() {

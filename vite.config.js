@@ -23,6 +23,9 @@ export default defineConfig({
       //api
       '@api': path.resolve(__dirname, './src/api'),
 
+      //contantas
+      '@constants': path.resolve(__dirname, './src/constants'),
+
       //pages
       '@pages': path.resolve(__dirname, './src/pages'),
 

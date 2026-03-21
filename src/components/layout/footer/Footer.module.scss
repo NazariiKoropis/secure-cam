@@ -1,0 +1,111 @@
+@use "@styles/variables" as *;
+@use "@styles/mixins" as *;
+
+.footer {
+    background-color: var(--bg-surface);
+    border-top: 1px solid var(--border-color);
+    padding-top: 60px;
+}
+
+.top {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    padding-bottom: 40px;
+
+    @include tablet {
+        flex-direction: column;
+    }
+}
+
+.brand {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 350px;
+
+    .description {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        line-height: $lh-base;
+        margin: 0;
+    }
+
+    .contact {
+        color: var(--text-primary);
+        font-weight: $fw-medium;
+        text-decoration: none;
+        transition: color 0.2s;
+
+        &:hover {
+            color: var(--accent-primary);
+        }
+    }
+}
+
+.linksWrapper {
+    display: flex;
+    gap: 80px;
+
+    @include tablet {
+        flex-direction: column;
+        gap: 32px;
+    }
+}
+
+.linkGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .title {
+        color: var(--text-primary);
+        font-size: 1rem;
+        font-weight: $fw-semibold;
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .nav {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+
+        a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition:
+                color 0.2s,
+                transform 0.2s;
+            width: fit-content;
+
+            &:hover {
+                color: var(--accent-primary);
+                transform: translateX(4px);
+            }
+        }
+    }
+}
+
+.bottom {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 0;
+    border-top: 1px solid var(--border-color);
+
+    p {
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        margin: 0;
+    }
+
+    @include tablet {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+    }
+}

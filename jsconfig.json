@@ -8,6 +8,7 @@
       "@layout/*": ["src/components/layout/*"],
       "@shared/*": ["src/components/shared/*"],
       "@api/*": ["src/api/*"],
+      "@constants/*": ["src/constants/*"],
       "@pages/*": ["src/pages/*"],
       "@styles/*": ["src/assets/styles/*"],
       "@images/*": ["src/assets/images/*"]
