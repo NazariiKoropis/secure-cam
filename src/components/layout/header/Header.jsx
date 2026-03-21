@@ -21,6 +21,7 @@ import clsx from 'clsx'
 //constants
 import { ROUTES } from '@constants/routes'
 
+//nav items
 const NAV_ITEMS = [
   { path: ROUTES.HOME, label: 'Головна' },
   { path: ROUTES.CATALOG, label: 'Каталог' },

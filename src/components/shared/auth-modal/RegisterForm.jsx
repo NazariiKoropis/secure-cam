@@ -14,9 +14,7 @@ const registerSchema = z
   .object({
     name: z
       .string()
-
       .min(1, { message: "Ім'я не може бути порожнім" })
-
       .refine(
         (val) => {
           const words = val
@@ -28,6 +26,7 @@ const registerSchema = z
         { message: "Введіть повне ім'я та прізвище (мінімум 2 слова)" },
       ),
     email: z.string().email({ message: 'Невірний формат пошти' }),
+    phone: z.string().min(10, { message: 'Введіть коректний номер телефону' }),
     password: z
       .string()
       .min(8, { message: 'Пароль має містити мінімум 8 символів' }),
@@ -45,7 +44,13 @@ function RegisterForm({ onSuccess }) {
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(registerSchema),
-    defaultValues: { name: '', email: '', password: '', confirmPassword: '' },
+    defaultValues: {
+      name: '',
+      email: '',
+      phone: '',
+      password: '',
+      confirmPassword: '',
+    },
   })
 
   const onSubmit = async (data) => {
@@ -54,6 +59,7 @@ function RegisterForm({ onSuccess }) {
         name: data.name,
         email: data.email,
         password: data.password,
+        phone: data.phone,
       })
 
       //register logic
@@ -78,6 +84,14 @@ function RegisterForm({ onSuccess }) {
         label="Email"
         {...register('email')}
         error={errors.email?.message}
+      />
+
+      <Input
+        type="tel"
+        label="Номер телефону"
+        placeholder="+380"
+        {...register('phone')}
+        error={errors.phone?.message}
       />
 
       <Input
