@@ -5,8 +5,9 @@ import {
     updateProfile,
 } from "firebase/auth";
 
+//database
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
-import { auth, database } from './../firebase/firebase';
+import { auth, database } from './../config/firebase';
 
 // login
 export const login = async (email, password) => {

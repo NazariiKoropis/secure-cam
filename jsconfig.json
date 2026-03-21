@@ -10,6 +10,7 @@
       "@api/*": ["src/api/*"],
       "@constants/*": ["src/constants/*"],
       "@pages/*": ["src/pages/*"],
+      "@store/*": ["src/redux/*"],
       "@styles/*": ["src/assets/styles/*"],
       "@images/*": ["src/assets/images/*"]
     }
