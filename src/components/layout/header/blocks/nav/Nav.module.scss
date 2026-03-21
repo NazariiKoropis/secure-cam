@@ -1,0 +1,90 @@
+@use "@styles/variables" as *;
+@use "@styles/mixins" as *;
+
+.nav {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+
+    &:not(&--mobile) {
+        @include tablet {
+            display: none;
+        }
+    }
+
+    &--mobile {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+        gap: 24px;
+    }
+}
+
+.list {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    &--mobile {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+}
+
+.navLink {
+    position: relative;
+    display: block;
+    font-size: 1rem;
+    font-weight: $fw-medium;
+    padding: 8px 16px;
+    border-radius: $border-radius-lg;
+    color: var(--text-primary);
+    text-decoration: none;
+    padding-left: 36px;
+
+    transition:
+        background-color 0.3s,
+        color 0.3s;
+
+    &::before {
+        content: "";
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 1.2rem;
+        height: 1.2rem;
+        background-color: var(--text-inverse);
+        mask-image: url($camera-svg);
+        mask-repeat: no-repeat;
+        mask-size: contain;
+        mask-position: center;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+
+    &:hover,
+    &--active {
+        background-color: var(--accent-active);
+        color: var(--text-inverse);
+
+        &::before {
+            opacity: 1;
+        }
+    }
+
+    &:hover:not(&--active) {
+        background-color: var(--accent-hover);
+    }
+
+    @include laptop {
+        font-size: 0.9rem;
+        padding-left: 30px;
+        &::before {
+            width: 0.9rem;
+            height: 0.9rem;
+            left: 8px;
+        }
+    }
+}

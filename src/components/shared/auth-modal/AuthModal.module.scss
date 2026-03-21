@@ -1,0 +1,23 @@
+@use "@styles/variables" as *;
+
+.form {
+    padding: 16px 0 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 8px;
+    font-size: 0.9rem;
+}
+
+.text {
+    color: var(--text-secondary);
+    margin: 0;
+}

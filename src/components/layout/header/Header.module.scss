@@ -2,6 +2,8 @@
 @use "@styles/mixins" as *;
 
 .headerWrapper {
+    position: relative;
+    z-index: 20;
     border-bottom: 1px solid var(--border-color);
     background-color: var(--bg-surface);
 }
@@ -11,71 +13,6 @@
     align-items: center;
     justify-content: space-between;
     height: 80px;
-}
-
-.desktopNav {
-    display: flex;
-    align-items: center;
-    gap: 24px;
-
-    @include tablet {
-        display: none;
-    }
-}
-
-.desktopList {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-.navLink {
-    position: relative;
-    font-size: 1rem;
-    font-weight: $fw-medium;
-    padding: 8px 16px;
-    border-radius: $border-radius-lg;
-    color: var(--text-primary);
-    text-decoration: none;
-    padding-left: 36px;
-
-    transition:
-        background-color 0.3s,
-        color 0.3s;
-
-    &::before {
-        content: "";
-        position: absolute;
-        left: 12px;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 1.2rem;
-        height: 1.2rem;
-        background-color: var(--text-inverse);
-        mask-image: url($camera-svg);
-        mask-repeat: no-repeat;
-        mask-size: contain;
-        mask-position: center;
-        opacity: 0;
-        transition: opacity 0.3s;
-    }
-
-    &:hover,
-    &--active {
-        background-color: var(--accent-active);
-        color: var(--text-inverse);
-
-        &::before {
-            opacity: 1;
-        }
-    }
-
-    &:hover {
-        background-color: var(--accent-hover);
-    }
 }
 
 .burgerBtn {
@@ -102,18 +39,17 @@
         transition:
             transform 0.3s,
             opacity 0.3s;
-        transform-origin: left center;
     }
 
     &--active {
         span:nth-child(1) {
-            transform: rotate(45deg);
+            transform: translateY(9px) rotate(45deg);
         }
         span:nth-child(2) {
             opacity: 0;
         }
         span:nth-child(3) {
-            transform: rotate(-45deg);
+            transform: translateY(-9px) rotate(-45deg);
         }
     }
 }

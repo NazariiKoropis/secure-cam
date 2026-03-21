@@ -1,14 +1,22 @@
+//styles
+import styles from './Header.module.scss'
+
+//react
 import { useState } from 'react'
-import { NavLink, Link } from 'react-router-dom'
-import clsx from 'clsx'
+//router-dom
+import { Link } from 'react-router-dom'
 
 //components
-import Container from '@layout/container/Container' // Виправив подвійний слеш
-import Button from '@ui/button/Button'
+import Container from '@layout/container/Container'
 import Logo from '@shared/Logo/Logo'
-// import Modal from '@/components/ui/modal/Modal' // Поки закоментував, якщо не юзається
+import AuthModal from '@/components/shared/auth-modal/AuthModal'
 
-import styles from './Header.module.scss'
+//header components
+import Nav from './blocks/nav/Nav'
+import BurgerMenu from './blocks/burger-menu/BurgerMenu'
+
+//util
+import clsx from 'clsx'
 
 const NAV_ITEMS = [
   { path: '/', label: 'Головна' },
@@ -16,15 +24,16 @@ const NAV_ITEMS = [
   { path: '/calculator', label: 'Калькулятор' },
 ]
 
-const getNavLinkClass = ({ isActive }) => {
-  return clsx(styles.navLink, isActive && styles['navLink--active'])
-}
-
 function Header() {
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const [isOpenBurger, setIsOpenBurger] = useState(false)
 
   const onBurgerMenuClick = () => {
     setIsOpenBurger((prev) => !prev)
+  }
+
+  const onModalOpenClick = () => {
+    setIsModalOpen((prev) => !prev)
   }
 
   return (
@@ -35,20 +44,7 @@ function Header() {
             <Logo />
           </Link>
 
-          <nav className={styles.desktopNav}>
-            <ul className={styles.desktopList}>
-              {NAV_ITEMS.map(({ path, label }) => (
-                <li key={path}>
-                  {' '}
-                  <NavLink to={path} className={getNavLinkClass}>
-                    {label}
-                  </NavLink>
-                </li>
-              ))}
-            </ul>
-
-            <Button onClick={() => alert('Вхід')}>Увійти</Button>
-          </nav>
+          <Nav items={NAV_ITEMS} onClick={onModalOpenClick} />
 
           <button
             type="button"
@@ -66,6 +62,14 @@ function Header() {
           </button>
         </div>
       </Container>
+
+      <BurgerMenu
+        items={NAV_ITEMS}
+        isOpen={isOpenBurger}
+        onClick={onModalOpenClick}
+        onClose={() => setIsOpenBurger(false)}
+      />
+      <AuthModal isOpen={isModalOpen} onClose={onModalOpenClick} />
     </header>
   )
 }
