@@ -12,8 +12,16 @@ import { ROUTES } from '@constants/routes'
 
 //components
 import Layout from '@layout/Layout'
+import Loader from '@layout/loader/Loader'
+
+//hooks
+import { useAuthListener } from '@hooks/useAuthListener'
 
 function App() {
+  const { isAuthReady } = useAuthListener()
+
+  if (!isAuthReady) return <Loader />
+
   return (
     <Routes>
       <Route element={<Layout />}>

@@ -1,23 +1,29 @@
-//container
-import Container from '@layout/container/Container'
+//styles
+import styles from './Loader.module.scss'
 
+//util
+import clsx from 'clsx'
+
+//loader
 import { FidgetSpinner } from 'react-loader-spinner'
 
-function Loader() {
+function Loader({ fullScreen = true }) {
   return (
-    <Container>
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <FidgetSpinner
-          visible={true}
-          height="80"
-          width="80"
-          ariaLabel="fidget-spinner-loading"
-          wrapperStyle={{}}
-          wrapperClass="fidget-spinner-wrapper"
-          backgroundColor="var(--accent-primary)"
-        />
-      </div>
-    </Container>
+    <div
+      className={clsx(styles.loader, {
+        [styles['loader--fullScreen']]: fullScreen,
+      })}
+      aria-busy="true"
+    >
+      <FidgetSpinner
+        visible={true}
+        height="80"
+        width="80"
+        ariaLabel="fidget-spinner-loading"
+        wrapperClass="fidget-spinner-wrapper"
+        backgroundColor="var(--accent-primary)"
+      />
+    </div>
   )
 }
 

@@ -26,9 +26,13 @@ export default defineConfig({
       //contantas
       '@constants': path.resolve(__dirname, './src/constants'),
 
+      //hooks
+      '@hooks': path.resolve(__dirname, './src/hooks'),
+
       //pages
       '@pages': path.resolve(__dirname, './src/pages'),
 
+      //store
       '@store': path.resolve(__dirname, './src/redux'),
 
       // styles
