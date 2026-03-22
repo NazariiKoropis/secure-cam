@@ -1,11 +1,16 @@
-import { NavLink } from 'react-router-dom'
+// styles
+import styles from './Nav.module.scss'
+
+//router dom
+import { NavLink, Link } from 'react-router-dom'
+
+//util
 import clsx from 'clsx'
 
 // components
 import Button from '@ui/button/Button'
 
-// styles
-import styles from './Nav.module.scss'
+import { ROUTES } from '@constants/routes'
 
 function Nav({
   items,
@@ -13,11 +18,14 @@ function Nav({
   onClick,
   onClose,
   currentUser,
+  userRole,
   onLogout,
 }) {
   const getNavLinkClass = ({ isActive }) => {
     return clsx(styles.navLink, isActive && styles['navLink--active'])
   }
+
+  const profileRoute = userRole === 'admin' ? ROUTES.ADMIN : ROUTES.USER
 
   return (
     <nav className={clsx(styles.nav, mobile && styles['nav--mobile'])}>
@@ -33,14 +41,18 @@ function Nav({
 
       {currentUser ? (
         <div className={styles.userProfile}>
-          <div className={styles.userContainer}>
+          <Link
+            to={profileRoute}
+            className={styles.userContainer}
+            onClick={onClose}
+          >
             <img
               src={currentUser.photoURL}
               alt={currentUser.displayName}
               className={styles.avatar}
             />
             <span className={styles.userName}>{currentUser.displayName}</span>
-          </div>
+          </Link>
           <Button
             variant="ghost"
             fullWidth={mobile}

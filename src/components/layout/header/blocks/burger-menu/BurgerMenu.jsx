@@ -13,6 +13,7 @@ function BurgerMenu({
   onClick,
   onClose,
   currentUser,
+  userRole,
   onLogout,
 }) {
   return (
@@ -35,6 +36,7 @@ function BurgerMenu({
           onClick={onClick}
           onClose={onClose}
           currentUser={currentUser}
+          userRole={userRole}
           onLogout={onLogout}
         />
       </div>

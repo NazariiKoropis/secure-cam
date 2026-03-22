@@ -37,7 +37,7 @@ const NAV_ITEMS = [
 function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isOpenBurger, setIsOpenBurger] = useState(false)
-  const { currentUser } = useSelector((state) => state.user)
+  const { currentUser, userRole } = useSelector((state) => state.user)
 
   const onBurgerMenuClick = () => {
     setIsOpenBurger((prev) => !prev)
@@ -59,6 +59,7 @@ function Header() {
             items={NAV_ITEMS}
             onClick={() => setIsModalOpen(true)}
             currentUser={currentUser}
+            userRole={userRole}
             onLogout={handleLogout}
           />
 
@@ -85,6 +86,7 @@ function Header() {
         onClick={() => setIsModalOpen(true)}
         onClose={() => setIsOpenBurger(false)}
         currentUser={currentUser}
+        userRole={userRole}
         onLogout={handleLogout}
       />
       <AuthModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
