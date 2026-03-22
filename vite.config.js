@@ -15,7 +15,6 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
 
       //components
-      '@components': path.resolve(__dirname, './src/components'),
       '@ui': path.resolve(__dirname, './src/components/ui'),
       '@layout': path.resolve(__dirname, './src/components/layout'),
       '@shared': path.resolve(__dirname, './src/components/shared'),
