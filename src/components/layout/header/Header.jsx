@@ -21,6 +21,12 @@ import clsx from 'clsx'
 //constants
 import { ROUTES } from '@constants/routes'
 
+//redux
+import { useSelector } from 'react-redux'
+
+//api
+import { logout } from '@/api/auth.service'
+
 //nav items
 const NAV_ITEMS = [
   { path: ROUTES.HOME, label: 'Головна' },
@@ -31,13 +37,14 @@ const NAV_ITEMS = [
 function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isOpenBurger, setIsOpenBurger] = useState(false)
+  const { currentUser } = useSelector((state) => state.user)
 
   const onBurgerMenuClick = () => {
     setIsOpenBurger((prev) => !prev)
   }
 
-  const onModalOpenClick = () => {
-    setIsModalOpen((prev) => !prev)
+  const handleLogout = async () => {
+    await logout()
   }
 
   return (
@@ -48,7 +55,12 @@ function Header() {
             <Logo />
           </Link>
 
-          <Nav items={NAV_ITEMS} onClick={onModalOpenClick} />
+          <Nav
+            items={NAV_ITEMS}
+            onClick={() => setIsModalOpen(true)}
+            currentUser={currentUser}
+            onLogout={handleLogout}
+          />
 
           <button
             type="button"
@@ -70,10 +82,12 @@ function Header() {
       <BurgerMenu
         items={NAV_ITEMS}
         isOpen={isOpenBurger}
-        onClick={onModalOpenClick}
+        onClick={() => setIsModalOpen(true)}
         onClose={() => setIsOpenBurger(false)}
+        currentUser={currentUser}
+        onLogout={handleLogout}
       />
-      <AuthModal isOpen={isModalOpen} onClose={onModalOpenClick} />
+      <AuthModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </header>
   )
 }

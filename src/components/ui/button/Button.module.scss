@@ -39,7 +39,7 @@
     //ghost style
     &--ghost {
         background-color: transparent;
-        color: var(--text-primary);
+        color: var(--accent-primary);
         border-color: var(--accent-primary);
 
         &:not(:disabled):hover {

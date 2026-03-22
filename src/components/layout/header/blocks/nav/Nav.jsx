@@ -7,7 +7,14 @@ import Button from '@ui/button/Button'
 // styles
 import styles from './Nav.module.scss'
 
-function Nav({ items, mobile = false, onClick, onClose }) {
+function Nav({
+  items,
+  mobile = false,
+  onClick,
+  onClose,
+  currentUser,
+  onLogout,
+}) {
   const getNavLinkClass = ({ isActive }) => {
     return clsx(styles.navLink, isActive && styles['navLink--active'])
   }
@@ -24,15 +31,38 @@ function Nav({ items, mobile = false, onClick, onClose }) {
         ))}
       </ul>
 
-      <Button
-        onClick={() => {
-          onClick()
-          if (onClose) onClose()
-        }}
-        fullWidth={mobile}
-      >
-        Увійти
-      </Button>
+      {currentUser ? (
+        <div className={styles.userProfile}>
+          <div className={styles.userContainer}>
+            <img
+              src={currentUser.photoURL}
+              alt={currentUser.displayName}
+              className={styles.avatar}
+            />
+            <span className={styles.userName}>{currentUser.displayName}</span>
+          </div>
+          <Button
+            variant="ghost"
+            fullWidth={mobile}
+            onClick={() => {
+              onLogout()
+              if (onClose) onClose()
+            }}
+          >
+            Вийти
+          </Button>
+        </div>
+      ) : (
+        <Button
+          onClick={() => {
+            onClick()
+            if (onClose) onClose()
+          }}
+          fullWidth={mobile}
+        >
+          Увійти
+        </Button>
+      )}
     </nav>
   )
 }

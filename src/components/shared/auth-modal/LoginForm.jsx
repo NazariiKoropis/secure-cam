@@ -10,6 +10,9 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 
+//api
+import { login } from '@/api/auth.service'
+
 const loginSchema = z.object({
   email: z.string().email({ message: 'Невірний формат пошти' }),
   password: z
@@ -21,6 +24,7 @@ function LoginForm({ onSuccess }) {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(loginSchema),
@@ -29,13 +33,25 @@ function LoginForm({ onSuccess }) {
 
   const onSubmit = async (data) => {
     try {
-      console.log('Дані логіну для Firebase:', data)
+      const { error } = await login(data.email, data.password)
 
-      //auth logic
+      if (error) {
+        console.error('Помилка входу Firebase:', error.message)
+
+        setError('email', {
+          type: 'server',
+          message: 'Невірна пошта або пароль',
+        })
+        setError('password', {
+          type: 'server',
+          message: 'Невірна пошта або пароль',
+        })
+        return
+      }
 
       if (onSuccess) onSuccess()
     } catch (error) {
-      console.error('Помилка входу:', error)
+      console.error('Неочікувана помилка фронтенду:', error)
     }
   }
 

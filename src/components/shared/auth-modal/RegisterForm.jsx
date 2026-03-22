@@ -10,6 +10,9 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 
+//api - ПЕРЕЙМЕНУВАЛИ ІМПОРТ
+import { register as registerUser } from '@/api/auth.service'
+
 const registerSchema = z
   .object({
     name: z
@@ -39,8 +42,9 @@ const registerSchema = z
 
 function RegisterForm({ onSuccess }) {
   const {
-    register,
+    register, // Це функція для інпутів (від react-hook-form)
     handleSubmit,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(registerSchema),
@@ -55,18 +59,26 @@ function RegisterForm({ onSuccess }) {
 
   const onSubmit = async (data) => {
     try {
-      console.log('Дані реєстрації для Firebase:', {
-        name: data.name,
-        email: data.email,
-        password: data.password,
-        phone: data.phone,
-      })
+      const { error } = await registerUser(
+        data.email,
+        data.password,
+        data.name,
+        data.phone,
+      )
 
-      //register logic
+      if (error) {
+        console.error('Помилка реєстрації Firebase:', error.message)
+
+        setError('email', {
+          type: 'server',
+          message: 'Ця пошта вже використовується',
+        })
+        return
+      }
 
       if (onSuccess) onSuccess()
     } catch (error) {
-      console.error('Помилка реєстрації:', error)
+      console.error('Неочікувана помилка фронтенду:', error)
     }
   }
 
@@ -74,7 +86,7 @@ function RegisterForm({ onSuccess }) {
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <Input
         type="text"
-        label="Ім'я"
+        label="Ім'я та Прізвище"
         {...register('name')}
         error={errors.name?.message}
       />

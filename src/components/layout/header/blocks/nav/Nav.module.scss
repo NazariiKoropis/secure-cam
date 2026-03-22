@@ -88,3 +88,47 @@
         }
     }
 }
+
+.userProfile {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+}
+
+.userContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+
+    @include desktop {
+        flex-direction: column;
+        gap: 8px;
+    }
+}
+
+.avatar {
+    flex-shrink: 0;
+    width: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--accent-primary);
+
+    @include desktop {
+        width: 30px;
+    }
+}
+
+.userName {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: $fw-bold;
+    font-size: 1rem;
+    color: var(--text-primary);
+    @include desktop {
+        text-align: center;
+        font-size: 0.8rem;
+    }
+}

@@ -7,7 +7,14 @@ import Nav from '../nav/Nav'
 //util
 import clsx from 'clsx'
 
-function BurgerMenu({ items, isOpen, onClick, onClose }) {
+function BurgerMenu({
+  items,
+  isOpen,
+  onClick,
+  onClose,
+  currentUser,
+  onLogout,
+}) {
   return (
     <div
       className={clsx(styles.overlay, {
@@ -22,7 +29,14 @@ function BurgerMenu({ items, isOpen, onClick, onClose }) {
         })}
         onClick={(e) => e.stopPropagation()}
       >
-        <Nav items={items} mobile onClick={onClick} onClose={onClose} />
+        <Nav
+          items={items}
+          mobile
+          onClick={onClick}
+          onClose={onClose}
+          currentUser={currentUser}
+          onLogout={onLogout}
+        />
       </div>
     </div>
   )
