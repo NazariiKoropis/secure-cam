@@ -1,5 +1,8 @@
+//hero components
+import Hero from './blocks/hero/Hero'
+
 function Home() {
-  return <div>Home</div>
+  return <Hero />
 }
 
 export default Home
