@@ -1,11 +1,12 @@
 @use "./variables" as *;
+@use "./mixins" as *;
 @use "./reset" as *;
 
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
 :root {
     // 1. Backgrounds & Surfaces
-    --bg-main: #f8fafc; // Світло-сірий фон сайту
+    --bg-main: #f8f9fa; // Світло-сірий фон сайту
     --bg-surface: #ffffff; // Чисто білі картки та модалки
     --bg-surface-light: #e2e8f0; // Світло-сірий для скролбару та плашок (Slate 200)
 
@@ -77,4 +78,12 @@ body {
     clip-path: inset(100%);
     clip: rect(0 0 0 0);
     overflow: hidden;
+}
+
+section {
+    padding: 40px 0px;
+
+    @include tablet {
+        padding: 20px 0px;
+    }
 }

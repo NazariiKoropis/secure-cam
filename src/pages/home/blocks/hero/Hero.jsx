@@ -5,29 +5,38 @@ import styles from './Hero.module.scss'
 import Container from '@layout/container/Container'
 import Button from '@ui/button/Button'
 
-import img from './../../../../assets/images/home/home-hero-img.png'
+//img
+import img from '@images/home/home-hero-img.png'
+
+import { ROUTES } from '@constants/routes'
 
 function Hero() {
   return (
-    <section>
+    <section className={styles.heroSection}>
       <Container>
-        <div>
-          <div>
-            <h1>
+        <div className={styles.hero}>
+          <div className={styles.content}>
+            <h1 className={styles.title}>
               Professional Security Solutions for{' '}
               <span> Your Peace of Mind</span>
             </h1>
-            <p>
+            <p className={styles.desc}>
               Design, install, and support CCTV systems with ease. Our Al-driven
               surveillance provides uncompromising clarity and 24/7 reliability.
             </p>
-            <div>
-              <Button>Open Catalog</Button>
-              <Button>Calculate cost</Button>
+            <div className={styles.buttonsWrapper}>
+              <Button to={ROUTES.CALCULATOR}>Open Catalog</Button>
+              <Button variant="ghost" to={ROUTES.CALCULATOR}>
+                Calculate cost
+              </Button>
             </div>
           </div>
-          <div>
-            <img src={img} alt="Камера" />
+          <div className={styles.heroImage}>
+            <img src={img} alt="SecureCam Smart Security Camera" />
+            <span className={styles.liveBadge}>
+              <span className={styles.dot}>●</span>
+              Live Stream 4K
+            </span>
           </div>
         </div>
       </Container>
