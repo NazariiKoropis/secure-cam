@@ -1,6 +1,10 @@
 @use "@styles/variables" as *;
 @use "@styles/mixins" as *;
 
+.heroSection {
+    overflow: hidden;
+}
+
 .hero {
     position: relative;
     display: grid;
@@ -26,11 +30,13 @@
 }
 
 .content {
+    background-color: transparent;
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 24px;
     max-width: 90%;
+    z-index: 1;
 
     @include tablet {
         max-width: 100%;
@@ -68,7 +74,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
     background-color: var(--bg-surface);
     padding: 12px;
     border-radius: $border-radius-lg;
@@ -82,8 +87,20 @@
         border-radius: $border-radius;
     }
 
-    @include mobile {
-        display: none;
+    @include tablet {
+        position: absolute;
+        right: -20px;
+        z-index: 0;
+        opacity: 0.15;
+        transform: rotate(15deg) scale(1.2);
+
+        background-color: transparent;
+        box-shadow: none;
+        padding: 0;
+
+        .liveBadge {
+            display: none;
+        }
     }
 }
 
@@ -106,4 +123,17 @@
 .dot {
     color: red;
     line-height: 1;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.3;
+    }
+    100% {
+        opacity: 1;
+    }
 }

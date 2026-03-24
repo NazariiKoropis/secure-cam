@@ -1,5 +1,5 @@
 //styles
-import styles from './Engenerring.module.scss'
+import styles from './Engineering.module.scss'
 
 //components
 import Container from '@layout/container/Container'
@@ -30,19 +30,19 @@ const FEATURE_ITEMS = [
 
 function Engeneering() {
   return (
-    <section>
+    <section className={styles.engeneeringSection}>
       <Container>
         <div>
-          <header>
-            <h2>Precision Engineering</h2>
+          <header className={styles.engSection}>
+            <h2 className={styles.title}>Precision Engineering</h2>
           </header>
-          <ul>
+          <ul className={styles.itemsWrapper}>
             {FEATURE_ITEMS.map(({ id, icon, title, desc }) => (
-              <li id={id}>
-                <div>
-                  {icon}
-                  <h3>{title}</h3>
-                  <p>{desc}</p>
+              <li key={id} className={styles.item}>
+                <div className={styles.iconWrapper}> {icon}</div>
+                <div className={styles.itemContent}>
+                  <h3 className={styles.itemTitle}>{title}</h3>
+                  <p className={styles.itemDesc}>{desc}</p>
                 </div>
               </li>
             ))}

@@ -25,7 +25,7 @@ function Hero() {
               surveillance provides uncompromising clarity and 24/7 reliability.
             </p>
             <div className={styles.buttonsWrapper}>
-              <Button to={ROUTES.CALCULATOR}>Open Catalog</Button>
+              <Button to={ROUTES.CATALOG}>Open Catalog</Button>
               <Button variant="ghost" to={ROUTES.CALCULATOR}>
                 Calculate cost
               </Button>

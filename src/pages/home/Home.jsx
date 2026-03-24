@@ -1,12 +1,12 @@
 //hero components
 import Hero from './blocks/hero/Hero'
-import Engeneering from './blocks/engeneering/Engeneering'
+import Engineering from './blocks/engineering/Engineering'
 import Featured from './blocks/featured/Featured'
 
 function Home() {
   return (
     <>
-      <Hero /> <Engeneering /> <Featured />
+      <Hero /> <Engineering /> <Featured />
     </>
   )
 }
