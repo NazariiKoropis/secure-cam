@@ -27,7 +27,7 @@ function TechCard({ item }) {
 
   const onAddItemClick = (e) => {
     e.stopPropagation()
-    alert('added to cart')
+    alert('додано до кошика')
   }
 
   return (

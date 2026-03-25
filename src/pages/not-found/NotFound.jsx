@@ -1,5 +1,5 @@
 function NotFound() {
-  return <div>Page isnt found</div>
+  return <div>Сторінку не знайдено</div>
 }
 
 export default NotFound

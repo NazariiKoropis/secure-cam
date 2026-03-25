@@ -17,18 +17,17 @@ function Teaser() {
         <div className={styles.teaserWrapper}>
           <div className={styles.teaserInfo}>
             <h2 className={styles.title}>
-              Build your custom security kit and calculate the price
-              automatically
+              Побудуйте свій набір безпеки та розраховуйте вартість автоматично
             </h2>
             <p className={styles.desc}>
-              No hidden fees. Select your cameras, storage capacity, and
-              installation complexity to get an instant quote.
+              Без прихованих комісій. Виберіть камери, обсяг сховища та
+              складність установки, щоб отримати миттєву кошторис.
             </p>
-            <Button to={ROUTES.CALCULATOR}>Try Calculator</Button>
+            <Button to={ROUTES.CALCULATOR}>Спробувати калькулятор</Button>
           </div>
 
           <div className={styles.imageWrapper}>
-            <img src={image} alt="Security kit calculator dashboard" />
+            <img src={image} alt="Панель калькулятора набору безпеки" />
           </div>
         </div>
       </Container>

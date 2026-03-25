@@ -11,20 +11,20 @@ const FEATURE_ITEMS = [
   {
     id: '24/7 Cloud Recording',
     icon: <CloudCheck />,
-    title: '24/7 Cloud Recording',
-    desc: 'Redundant storage across global data centers ensures your footage is never lost, even if the physical hardware is damaged.',
+    title: 'Цілодобове хмарне запис',
+    desc: 'Надмірність сховища в глобальних центрах обробки даних забезпечує те, що ваші записи ніколи не будуть втрачені, навіть якщо фізичне обладнання пошкоджене.',
   },
   {
     id: 'Professional Installation',
     icon: <WandSparkles />,
-    title: 'Professional Installation',
-    desc: 'Certified technicians handle every aspect of the setup, from wiring to network optimization and camera positioning.',
+    title: 'Професійна установка',
+    desc: 'Сертифіковані технічні фахівці обробляють кожний аспект установлення, від прокладання кабелів до оптимізації мережі та розташування камери.',
   },
   {
     id: 'Smart Mobile Access',
     icon: <Smartphone />,
-    title: 'Smart Mobile Access',
-    desc: 'Receive instant AI-powered alerts and monitor your property from anywhere in the world via  our encrypted mobile application.',
+    title: 'Розумний мобільний доступ',
+    desc: 'Отримуйте миттєві сповіщення на основі штучного інтелекту та контролюйте свою власність звідусіль у світі за допомогою нашої шифрованої мобільної програми.',
   },
 ]
 
@@ -34,7 +34,7 @@ function Engeneering() {
       <Container>
         <div>
           <header className={styles.engSection}>
-            <h2 className={styles.title}>Precision Engineering</h2>
+            <h2 className={styles.title}>Точна інженерія</h2>
           </header>
           <ul className={styles.itemsWrapper}>
             {FEATURE_ITEMS.map(({ id, icon, title, desc }) => (

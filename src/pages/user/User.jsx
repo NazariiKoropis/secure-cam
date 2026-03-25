@@ -1,5 +1,5 @@
 function User() {
-  return <div>User</div>
+  return <div>Користувач</div>
 }
 
 export default User

@@ -16,25 +16,25 @@ import { ROUTES } from '@constants/routes'
 const FEATURED_ITEMS = [
   {
     id: 'camera-1',
-    title: 'Dome IP Camera Pro 4K',
+    title: 'Купольна IP-камера Pro 4K',
     price: '150',
     amenities: ['PoE', 'IR 30m'],
   },
   {
     id: 'camera-2',
-    title: 'Smart Bullet Camera',
+    title: 'Розумна куля-камера',
     price: '120',
     amenities: ['Wi-Fi', 'AI Tracking'],
   },
   {
     id: 'camera-3',
-    title: 'NVR 8-Channel',
+    title: 'NVR 8-каналів',
     price: '200',
     amenities: ['2TB HDD', '4K Output'],
   },
   {
     id: 'camera-4',
-    title: 'PTZ Speed Dome',
+    title: 'PTZ Поворотний купол',
     price: '450',
     amenities: ['36x Zoom', 'Auto-patrol'],
   },
@@ -46,14 +46,14 @@ function Featured() {
       <Container>
         <header className={styles.featuredHeader}>
           <div className={styles.textWrapper}>
-            <h2 className={styles.featuredTitle}>FEATURED HARDWARE</h2>
+            <h2 className={styles.featuredTitle}>РЕКОМЕНДОВАНЕ ОБЛАДНАННЯ</h2>
             <p className={styles.desc}>
-              Our top-rated surveillance units for 2024
+              Найпопулярніші системи спостереження 2024 року
             </p>
           </div>
 
           <Link className={styles.link} to={ROUTES.CATALOG}>
-            View Full Catalog
+            Переглянути весь каталог
           </Link>
         </header>
         <ul className={styles.featuredList}>

@@ -17,25 +17,25 @@ function Hero() {
         <div className={styles.hero}>
           <div className={styles.content}>
             <h1 className={styles.title}>
-              Professional Security Solutions for{' '}
-              <span> Your Peace of Mind</span>
+              Професійні рішення безпеки для <span> вашого спокою</span>
             </h1>
             <p className={styles.desc}>
-              Design, install, and support CCTV systems with ease. Our Al-driven
-              surveillance provides uncompromising clarity and 24/7 reliability.
+              Проектування, установка та підтримка систем CCTV з легкістю. Наш
+              штучний інтелект забезпечує безкомпромісну чіткість та 24/7
+              надійність.
             </p>
             <div className={styles.buttonsWrapper}>
-              <Button to={ROUTES.CATALOG}>Open Catalog</Button>
+              <Button to={ROUTES.CATALOG}>Відкрити каталог</Button>
               <Button variant="ghost" to={ROUTES.CALCULATOR}>
-                Calculate cost
+                Розрахувати вартість
               </Button>
             </div>
           </div>
           <div className={styles.heroImage}>
-            <img src={img} alt="SecureCam Smart Security Camera" />
+            <img src={img} alt="SecureCam Розумна камера безпеки" />
             <span className={styles.liveBadge}>
               <span className={styles.dot}>●</span>
-              Live Stream 4K
+              Прямий потік 4K
             </span>
           </div>
         </div>
