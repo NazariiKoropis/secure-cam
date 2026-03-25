@@ -49,11 +49,16 @@
         color: var(--accent-primary);
     }
 
-    @include tablet {
+    @include laptop {
         font-size: 3rem;
     }
+
+    @include tablet {
+        font-size: 2.5rem;
+    }
+
     @include mobile {
-        font-size: 2.2rem;
+        font-size: 2rem;
     }
 }
 

@@ -34,6 +34,9 @@ export default defineConfig({
       //store
       '@store': path.resolve(__dirname, './src/redux'),
 
+      //util
+      '@utils': path.resolve(__dirname, './src/utils'),
+
       // styles
       '@styles': path.resolve(__dirname, './src/assets/styles'),
       '@images': path.resolve(__dirname, './src/assets/images')

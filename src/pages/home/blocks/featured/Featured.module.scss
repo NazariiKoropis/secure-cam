@@ -1,0 +1,71 @@
+@use "@styles/variables" as *;
+@use "@styles/mixins" as *;
+
+.featuredSection {
+    padding: 40px 0px;
+}
+
+.featuredHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0px;
+
+    @include mobile {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+}
+
+.textWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.featuredTitle {
+    text-transform: uppercase;
+
+    @include tablet {
+        font-size: 1.3rem;
+    }
+}
+
+.desc {
+    @include tablet {
+        font-size: 0.8rem;
+    }
+}
+
+.link {
+    display: inline-block;
+    border-bottom: 2px solid var(--text-primary);
+    padding-bottom: 2px;
+    font-weight: $fw-bold;
+    transition:
+        transform 0.3s ease,
+        color 0.3s ease,
+        border-color 0.3s ease;
+
+    &:hover {
+        color: var(--accent-primary);
+        border-color: var(--accent-primary);
+        transform: translateY(-2px);
+    }
+}
+
+.featuredList {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+
+    @include laptop {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include mobile {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}

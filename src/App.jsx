@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom'
 //pages public
 import Home from '@pages/home/Home'
 import Catalog from '@pages/catalog/Catalog'
+import CatalogDetails from '@pages/catalog-details/CatalogDetails'
 import Calculator from '@pages/calculator/Calculator'
 import NotFound from '@pages/not-found/NotFound'
 
@@ -34,6 +35,7 @@ function App() {
       <Route element={<Layout />}>
         <Route path={ROUTES.HOME} element={<Home />} />
         <Route path={ROUTES.CATALOG} element={<Catalog />} />
+        <Route path={ROUTES.CATALOG_ITEM} element={<CatalogDetails />} />
         <Route path={ROUTES.CALCULATOR} element={<Calculator />} />
 
         <Route element={<ProtectedRoute />}>
