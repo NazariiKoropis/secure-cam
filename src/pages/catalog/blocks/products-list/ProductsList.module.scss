@@ -1,0 +1,51 @@
+@use "@styles/variables" as *;
+
+.listSection {
+    width: 100%;
+}
+
+.grid {
+    display: grid;
+
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.gridItem {
+    display: flex;
+}
+
+.emptyState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 20px;
+    background-color: var(--bg-surface);
+    border-radius: $border-radius-lg;
+    border: 1px dashed var(--border-color);
+    width: 100%;
+}
+
+.iconWrapper {
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+    opacity: 0.5;
+}
+
+.emptyTitle {
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+}
+
+.emptyDesc {
+    color: var(--text-secondary);
+    max-width: 400px;
+    line-height: $lh-base;
+}

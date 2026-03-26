@@ -1,16 +1,11 @@
-//styles
 import styles from './RangeInput.module.scss'
-
-//react
 import { useState, useEffect } from 'react'
-
-//util
 import clsx from 'clsx'
 
 function RangeInput({
   min = 0,
-  max = 1000,
-  value = [0, 1000],
+  max = 10000,
+  value = [0, 2000],
   onChange,
   step = 1,
   label = 'Ціна ($)',
@@ -24,13 +19,19 @@ function RangeInput({
   }, [value])
 
   const handleMinChange = (e) => {
-    const val = Math.min(Number(e.target.value), maxValue - step)
+    let val = Number(e.target.value)
+    val = Math.min(val, maxValue - step)
+    val = Math.max(val, min)
+
     setMinValue(val)
     if (onChange) onChange([val, maxValue])
   }
 
   const handleMaxChange = (e) => {
-    const val = Math.max(Number(e.target.value), minValue + step)
+    let val = Number(e.target.value)
+    val = Math.max(val, minValue + step)
+    val = Math.min(val, max)
+
     setMaxValue(val)
     if (onChange) onChange([minValue, val])
   }
