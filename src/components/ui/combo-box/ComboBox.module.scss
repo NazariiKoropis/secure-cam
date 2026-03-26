@@ -1,0 +1,74 @@
+@use "@styles/variables" as *;
+
+.comboBoxWrapper {
+    display: flex;
+    width: 100%;
+    gap: 8px;
+
+    &.column {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    &.row {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    &:focus-within {
+        .label {
+            color: var(--accent-hover);
+        }
+    }
+}
+
+.label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    transition:
+        color 0.3s,
+        border-color 0.3s;
+}
+
+.selectContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.select {
+    appearance: none;
+    -webkit-appearance: none;
+
+    width: 100%;
+    padding: 12px;
+    padding-right: 40px;
+
+    border-radius: $border-radius;
+    border: 1px solid var(--bg-surface-light);
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    font-size: 1rem;
+    cursor: pointer;
+    outline: none;
+    transition:
+        color 0.3s,
+        border-color 0.3s;
+
+    &:focus {
+        border-color: var(--accent-primary);
+    }
+    &:focus + .customArrow {
+        transform: rotate(180deg);
+    }
+}
+
+.customArrow {
+    position: absolute;
+    right: 12px;
+    color: var(--text-secondary);
+
+    pointer-events: none;
+    transition: transform 0.3s ease;
+}
