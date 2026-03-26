@@ -10,7 +10,7 @@ import ComboBox from '@ui/combo-box/ComboBox'
 function Hero({ sortValue, sortOptions, onSortChange }) {
   return (
     <section className={styles.heroSection}>
-      <Container className={styles.heroContainer}>
+      <div className={styles.heroContainer}>
         <div className={styles.heroWrapper}>
           <h1 className={styles.title}>Security Equipment Catalog</h1>
           <p className={styles.desc}>
@@ -29,7 +29,7 @@ function Hero({ sortValue, sortOptions, onSortChange }) {
             direction="row"
           />
         </div>
-      </Container>
+      </div>
     </section>
   )
 }
