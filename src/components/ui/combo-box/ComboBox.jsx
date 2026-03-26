@@ -1,8 +1,8 @@
-//libs
+// libs
 import clsx from 'clsx'
 import styles from './ComboBox.module.scss'
 
-//icons
+// icons
 import { ChevronDown } from 'lucide-react'
 
 function ComboBox({
@@ -19,8 +19,8 @@ function ComboBox({
   const wrapperStyles = clsx(styles.comboBoxWrapper, styles[direction])
   const comboBoxStyles = clsx(styles.select, className)
 
-  const handleChange = (e) => {
-    if (onChange) onChange(e)
+  const handleChange = (event) => {
+    if (onChange) onChange(event)
   }
 
   return (
@@ -47,6 +47,7 @@ function ComboBox({
             const isObject = typeof option === 'object'
             const optionValue = isObject ? option.value : option
             const optionLabel = isObject ? option.label : option
+
             return (
               <option key={optionValue} value={optionValue}>
                 {optionLabel}

@@ -3,6 +3,7 @@ import styles from './CheckBox.module.scss'
 
 //util
 import clsx from 'clsx'
+import { useId } from 'react'
 
 //icons
 import { Check } from 'lucide-react'
@@ -17,8 +18,8 @@ function CheckBox({
   className,
   ...props
 }) {
-  const inputId =
-    id || `checkbox-${name || Math.random().toString(36).substring(2, 9)}`
+  const generatedId = useId()
+  const inputId = id || `checkbox-${name || generatedId.replace(/:/g, '')}`
 
   return (
     <label

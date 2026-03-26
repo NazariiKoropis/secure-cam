@@ -1,20 +1,30 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import styles from './Filter.module.scss'
 
-//components
+// components
 import Button from '@ui/button/Button'
 import ComboBox from '@ui/combo-box/ComboBox'
 import CheckBox from '@ui/check-box/CheckBox'
 import RangeInput from '@ui/range-input/RangeInput'
 
-const DEFAULT_FILTERS = {
+const FALLBACK_PRICE_RANGE = [0, 2000]
+
+const createDefaultFilters = (priceRangeLimits) => ({
   category: '',
   inStock: false,
-  priceRange: [0, 10000],
-}
+  priceRange: priceRangeLimits,
+})
 
-function Filter({ categoryOptions = [], onFilterApply }) {
-  const [filters, setFilters] = useState(DEFAULT_FILTERS)
+function Filter({
+  categoryOptions = [],
+  onFilterApply,
+  priceRangeLimits = FALLBACK_PRICE_RANGE,
+}) {
+  const defaultFilters = useMemo(
+    () => createDefaultFilters(priceRangeLimits),
+    [priceRangeLimits],
+  )
+  const [filters, setFilters] = useState(defaultFilters)
 
   const handleFilterChange = (key, value) => {
     setFilters((prev) => ({
@@ -23,31 +33,36 @@ function Filter({ categoryOptions = [], onFilterApply }) {
     }))
   }
 
-  const onSubmit = (e) => {
-    e.preventDefault()
+  const onSubmit = (event) => {
+    event.preventDefault()
     if (onFilterApply) onFilterApply(filters)
   }
 
   const onClear = () => {
-    setFilters(DEFAULT_FILTERS)
-    if (onFilterApply) onFilterApply(DEFAULT_FILTERS)
+    setFilters(defaultFilters)
+    if (onFilterApply) onFilterApply(defaultFilters)
   }
 
   return (
     <aside className={styles.filterSidebar}>
       <header className={styles.header}>
-        <h2 className={styles.title}>Catalog filter</h2>
-        <p className={styles.desc}>Precision hardware</p>
+        <span className={styles.eyebrow}>Пошук по каталогу</span>
+        <h2 className={styles.title}>Фільтри</h2>
+        <p className={styles.desc}>
+          Налаштуйте вибірку за категорією, наявністю та ціновим діапазоном.
+        </p>
       </header>
 
       <form className={styles.form} onSubmit={onSubmit}>
         <div className={styles.filterGroup}>
           <ComboBox
             name="category"
-            label="Category"
+            label="Категорія"
             options={categoryOptions}
             value={filters.category}
-            onChange={(e) => handleFilterChange('category', e.target.value)}
+            onChange={(event) =>
+              handleFilterChange('category', event.target.value)
+            }
           />
         </div>
 
@@ -55,15 +70,17 @@ function Filter({ categoryOptions = [], onFilterApply }) {
           <CheckBox
             label="В наявності"
             checked={filters.inStock}
-            onChange={(e) => handleFilterChange('inStock', e.target.checked)}
+            onChange={(event) =>
+              handleFilterChange('inStock', event.target.checked)
+            }
           />
         </div>
 
         <div className={styles.filterGroup}>
           <RangeInput
             label="Ціна ($)"
-            min={0}
-            max={2000}
+            min={priceRangeLimits[0]}
+            max={priceRangeLimits[1]}
             step={10}
             value={filters.priceRange}
             onChange={(newRange) => handleFilterChange('priceRange', newRange)}
@@ -72,7 +89,7 @@ function Filter({ categoryOptions = [], onFilterApply }) {
 
         <footer className={styles.footer}>
           <Button type="submit" className={styles.actionBtn}>
-            Filter
+            Застосувати
           </Button>
           <Button
             type="button"
@@ -80,7 +97,7 @@ function Filter({ categoryOptions = [], onFilterApply }) {
             onClick={onClear}
             className={styles.actionBtn}
           >
-            Clear
+            Скинути
           </Button>
         </footer>
       </form>

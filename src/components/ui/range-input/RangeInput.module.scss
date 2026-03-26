@@ -3,13 +3,13 @@
 .wrapper {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 18px;
     width: 100%;
 }
 
 .label {
     font-size: 1rem;
-    font-weight: $fw-bold;
+    font-weight: $fw-semibold;
     color: var(--text-primary);
 }
 
@@ -26,18 +26,25 @@
 
 .numInput {
     width: 100%;
-    padding: 8px 12px;
-    border-radius: $border-radius;
-    border: 1px solid var(--bg-surface-light);
-    background-color: var(--bg-surface);
+    min-height: 48px;
+    padding: 12px 14px;
+    border-radius: 14px;
+    border: 1px solid rgba(148, 163, 184, 0.24);
+    background-color: var(--bg-main);
     color: var(--text-primary);
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    font-weight: $fw-medium;
     text-align: center;
     outline: none;
-    transition: border-color 0.3s;
+    transition:
+        border-color 0.3s,
+        box-shadow 0.3s,
+        background-color 0.3s;
 
     &:focus {
         border-color: var(--accent-primary);
+        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+        background-color: var(--bg-surface);
     }
 
     appearance: textfield;
@@ -57,7 +64,7 @@
 
 .sliderContainer {
     position: relative;
-    height: 24px;
+    height: 30px;
     display: flex;
     align-items: center;
     width: 100%;
@@ -66,16 +73,16 @@
 .track {
     position: absolute;
     width: 100%;
-    height: 4px;
-    background-color: var(--bg-surface-light);
-    border-radius: 2px;
+    height: 6px;
+    background-color: rgba(148, 163, 184, 0.24);
+    border-radius: 999px;
 }
 
 .activeTrack {
     position: absolute;
-    height: 4px;
-    background-color: var(--accent-primary);
-    border-radius: 2px;
+    height: 6px;
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-hover));
+    border-radius: 999px;
     pointer-events: none;
 }
 
@@ -95,17 +102,20 @@
     appearance: none;
     -webkit-appearance: none;
     pointer-events: auto;
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
     background-color: #ffffff;
-    border: 2px solid var(--accent-primary);
+    border: 3px solid var(--accent-primary);
     cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    transition: transform 0.1s;
+    box-shadow: 0 6px 14px rgba(37, 99, 235, 0.22);
+    transition:
+        transform 0.1s,
+        box-shadow 0.2s;
 
     &:hover {
         transform: scale(1.1);
+        box-shadow: 0 8px 18px rgba(37, 99, 235, 0.28);
     }
 }
 

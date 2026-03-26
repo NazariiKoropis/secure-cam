@@ -1,10 +1,10 @@
-//styles
+// styles
 import styles from './ProductsList.module.scss'
 
-//components
+// components
 import TechCard from '@shared/tech-card/TechCard'
 
-//icons
+// icons
 import { SearchX } from 'lucide-react'
 
 function ProductsList({ products = [] }) {

@@ -1,23 +1,23 @@
-//styles
+// styles
 import styles from './TechCard.module.scss'
 
-//components
+// components
 import Button from '@ui/button/Button'
 
-//icons
-import { ShoppingBag, Image as ImageIcon } from 'lucide-react'
+// icons
+import { Image as ImageIcon, ShoppingBag } from 'lucide-react'
 
-//constants
+// constants
 import { ROUTES } from '@constants/routes'
 
-//utils
+// utils
 import { getImage } from '@utils/getImage'
 
-//router-dom
+// router-dom
 import { useNavigate } from 'react-router-dom'
 
 function TechCard({ item }) {
-  const { id, title, price, amenities } = item
+  const { id, title, price, amenities = [] } = item
   const img = getImage(id)
   const navigate = useNavigate()
 
@@ -25,29 +25,32 @@ function TechCard({ item }) {
     navigate(`${ROUTES.CATALOG}/${id}`)
   }
 
-  const onAddItemClick = (e) => {
-    e.stopPropagation()
-    alert('додано до кошика')
+  const onAddItemClick = (event) => {
+    event.stopPropagation()
+    alert('Додано до кошика')
+  }
+
+  const onKeyDown = (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault()
+      onTechCardClick()
+    }
   }
 
   return (
-    <article className={styles.techCard} onClick={onTechCardClick} tabIndex={0}>
+    <article
+      className={styles.techCard}
+      onClick={onTechCardClick}
+      onKeyDown={onKeyDown}
+      tabIndex={0}
+    >
       <header className={styles.cardImage}>
         {img ? (
           <img src={img} alt={title} />
         ) : (
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              opacity: 0.5,
-            }}
-          >
+          <div className={styles.imageFallback}>
             <ImageIcon size={48} />
-            <span style={{ fontSize: '0.8rem', marginTop: '8px' }}>
-              Немає фото
-            </span>
+            <span className={styles.imageFallbackText}>Немає фото</span>
           </div>
         )}
       </header>
@@ -55,9 +58,9 @@ function TechCard({ item }) {
       <h3 className={styles.cardTitle}>{title}</h3>
 
       <ul className={styles.amenitiesList}>
-        {amenities.map((item) => (
-          <li key={item} className={styles.listItem}>
-            {item}
+        {amenities.map((amenity) => (
+          <li key={amenity} className={styles.listItem}>
+            {amenity}
           </li>
         ))}
       </ul>
