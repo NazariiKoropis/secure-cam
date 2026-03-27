@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 
 //api
-import { getAllProducts } from '@api/produc.service'
+import { getAllProducts } from '@api/product.service'
 
 //contants
 import { ROUTES } from '@constants/routes'

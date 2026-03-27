@@ -15,7 +15,7 @@ import ProductsList from './blocks/products-list/ProducsList'
 
 // api & query
 import { useQuery } from '@tanstack/react-query'
-import { getAllProducts } from '@api/produc.service'
+import { getAllProducts } from '@api/product.service'
 
 const FALLBACK_PRICE_RANGE = [0, 2000]
 
@@ -175,7 +175,9 @@ function Catalog() {
           <section className={styles.mainContent}>
             <div className={styles.resultsPanel}>
               <div className={styles.resultsCopy}>
-                <span className={styles.resultsEyebrow}>Каталог обладнання</span>
+                <span className={styles.resultsEyebrow}>
+                  Каталог обладнання
+                </span>
                 <h2 className={styles.resultsTitle}>{resultsLabel}</h2>
                 <p className={styles.resultsDescription}>
                   Відфільтруйте камери за категорією, наявністю та вартістю, щоб

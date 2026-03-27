@@ -1,5 +1,5 @@
 //database
-import { collection, getDocs } from "firebase/firestore";
+import { doc, getDoc, collection, getDocs } from "firebase/firestore";
 import { database } from './../config/firebase';
 
 import { COLLECTIONS } from "@constants/collections"
@@ -10,10 +10,26 @@ export const getAllProducts = async () => {
 
         const products = querySnapshot.docs.map(doc => ({
             id: doc.id,
-            ...doc.data()
+            ...doc.data(),
         }));
 
         return products;
+    } catch (error) {
+        console.error('Error fetching data from server', error);
+        return null;
+    }
+}
+
+export const getProductById = async (id) => {
+    try {
+        const querySnapshot = await getDoc(doc(database, `${COLLECTIONS.PRODUCTS}/${id}`));
+
+        const product = {
+            id: querySnapshot.id,
+            ...querySnapshot.data(),
+        }
+
+        return product
     } catch (error) {
         console.error('Error fetching data from server', error);
         return null;
