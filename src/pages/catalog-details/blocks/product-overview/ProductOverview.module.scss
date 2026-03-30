@@ -1,0 +1,175 @@
+@use "@styles/variables" as *;
+@use "@styles/mixins" as *;
+
+.overviewWrapper {
+    display: flex;
+    flex-direction: column;
+}
+.breadCrumbs {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 16px;
+    padding: 8px 0px;
+}
+
+.breadCrumbsItem {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: $fw-medium;
+    gap: 16px;
+
+    a {
+        transition: color 0.3s;
+    }
+    a:hover {
+        color: var(--accent-primary);
+    }
+}
+
+.contentWrapper {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 32px;
+    padding: 32px 0px;
+
+    @include tablet {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+}
+
+.imageWrapper {
+    padding: 16px;
+    border-radius: $border-radius-lg;
+    background-color: var(--bg-surface-light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.thumbnail {
+    width: 100%;
+    max-height: 500px;
+    object-fit: contain;
+    cursor: zoom-in;
+    transition: transform 0.3s ease;
+
+    &:hover {
+        transform: scale(1.02);
+    }
+}
+
+.lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 9999;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: zoom-out;
+
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+.zoomedImg {
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+    cursor: default;
+    border-radius: $border-radius;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.closeBtn {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+
+    &:hover {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.infoWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 16px;
+}
+
+.title {
+    font-size: $fz-h1;
+}
+.priceStockWrapper {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 8px;
+}
+.price {
+    font-size: $fz-h2;
+    font-weight: $fw-bold;
+}
+
+.stock {
+    color: var(--accent-primary);
+    font-weight: $fw-bold;
+    font-size: 0.9rem;
+}
+
+.amenities {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.amenitiesItem {
+    padding: 8px 16px;
+    font-weight: $fw-medium;
+    background-color: var(--bg-surface-light);
+    border-radius: $border-radius;
+    font-size: 0.875rem;
+    text-align: center;
+}
+
+.actionsWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.cartGroup {
+    display: flex;
+    gap: 16px;
+    @include mobile {
+        flex-direction: column;
+    }
+}
+
+.createdAt {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: $fz-small;
+}

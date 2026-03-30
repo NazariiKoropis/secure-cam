@@ -7,7 +7,9 @@ import ErrorMessage from '@shared/error-message/ErrorMessage'
 import Container from '@layout/container/Container'
 
 //local components
-import Header from './blocks/header/Header'
+import ProductOverview from './blocks/product-overview/ProductOverview'
+import Recomendations from './blocks/recomendations/Recomendations'
+import Reviews from './blocks/reviews/reviews'
 
 //router-dom
 import { useParams } from 'react-router-dom'
@@ -51,7 +53,9 @@ function CatalogDetails() {
 
   return (
     <Container>
-      <Header item={item} />
+      <ProductOverview item={item} />
+      <Recomendations id={item.id} />
+      <Reviews id={item.id} />
     </Container>
   )
 }

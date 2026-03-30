@@ -1,25 +1,57 @@
 @use "@styles/variables" as *;
 
 .counterWrapper {
-    display: flex;
+    display: inline-flex;
     flex-direction: row;
     align-items: center;
     border-radius: $border-radius;
-    background-color: var(--bg-surface-light);
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-surface);
+    overflow: hidden;
 }
 
 .counterButton {
-    padding: 8xp;
-    width: 32px;
-    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+
+    border: none;
+    background: transparent;
+    font-size: 1.25rem;
+    color: var(--text-primary);
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+    user-select: none;
+
+    &:hover:not(.disabled) {
+        background-color: var(--bg-surface-light);
+        color: var(--accent-primary);
+    }
+
+    &.disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+    }
 }
 
 .value {
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 48px;
+    height: 40px;
+    font-size: 1rem;
+    font-weight: $fw-bold;
+    color: var(--text-primary);
 
-    padding: 8xp;
-    width: 32px;
-    height: 32px;
+    border-left: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+
+    user-select: none;
 }

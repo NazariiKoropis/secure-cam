@@ -36,6 +36,24 @@ export const getProductById = async (id) => {
     }
 }
 
+export const getAllProductsExceptById = async (id) => {
+    try {
+        const querySnapshot = await getDocs(collection(database, COLLECTIONS.PRODUCTS));
+
+        const products = querySnapshot.docs
+            .filter(doc => doc.id !== id)
+            .map(doc => ({
+                id: doc.id,
+                ...doc.data(),
+            }));
+
+        return products;
+    } catch (error) {
+        console.error('Error fetching data from server', error);
+        return null;
+    }
+}
+
 export const getAllProductsCategory = async () => {
     try {
         const querySnapshot = await getDocs(collection(database, COLLECTIONS.PRODUCTS));
@@ -52,3 +70,4 @@ export const getAllProductsCategory = async () => {
         return null;
     }
 }
+
