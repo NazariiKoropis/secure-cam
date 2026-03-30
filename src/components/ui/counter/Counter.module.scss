@@ -1,0 +1,25 @@
+@use "@styles/variables" as *;
+
+.counterWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-radius: $border-radius;
+    background-color: var(--bg-surface-light);
+}
+
+.counterButton {
+    padding: 8xp;
+    width: 32px;
+    height: 32px;
+}
+
+.value {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 8xp;
+    width: 32px;
+    height: 32px;
+}

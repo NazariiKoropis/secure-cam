@@ -6,6 +6,9 @@ import Loader from '@layout/loader/Loader'
 import ErrorMessage from '@shared/error-message/ErrorMessage'
 import Container from '@layout/container/Container'
 
+//local components
+import Header from './blocks/header/Header'
+
 //router-dom
 import { useParams } from 'react-router-dom'
 
@@ -48,9 +51,7 @@ function CatalogDetails() {
 
   return (
     <Container>
-      <div style={{ padding: '40px 0' }}>
-        <h1>{item.title || item.name}</h1>{' '}
-      </div>
+      <Header item={item} />
     </Container>
   )
 }
