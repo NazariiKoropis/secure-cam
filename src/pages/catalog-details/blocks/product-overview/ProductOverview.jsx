@@ -13,11 +13,10 @@ import { getImage } from '@/utils/getImage'
 import { getDate } from '@/utils/getDate'
 
 //icons
-import { ChevronRight, X } from 'lucide-react' // Додав іконку хрестика для закриття
+import { ChevronRight, X } from 'lucide-react'
 
 function ProductOverview({ item }) {
   const [value, setValue] = useState(1)
-
   const [isZoomed, setIsZoomed] = useState(false)
 
   const {
@@ -31,12 +30,13 @@ function ProductOverview({ item }) {
     createdAt,
   } = item
 
+  const stockCount = Number.isFinite(Number(stock)) ? Number(stock) : 0
   const imgPath = getImage(id)
 
-  const BREAD_CRUMBS = [
+  const breadCrumbs = [
     { path: '/', name: 'Home' },
     { path: '/catalog', name: 'Catalog' },
-    { path: `/catalog/${category}`, name: category },
+    { path: '/catalog', name: category },
     { path: `/catalog/${id}`, name: name },
   ]
 
@@ -45,8 +45,11 @@ function ProductOverview({ item }) {
       <section className={styles.overviewWrapper}>
         <nav aria-label="Breadcrumb">
           <ul className={styles.breadCrumbs}>
-            {BREAD_CRUMBS.map((crumb, index) => (
-              <li className={styles.breadCrumbsItem} key={crumb.name}>
+            {breadCrumbs.map((crumb, index) => (
+              <li
+                className={styles.breadCrumbsItem}
+                key={`${crumb.path}-${crumb.name}`}
+              >
                 {index > 0 && (
                   <ChevronRight size={16} className={styles.separator} />
                 )}
@@ -62,7 +65,7 @@ function ProductOverview({ item }) {
           <div className={styles.imageWrapper}>
             <img
               src={imgPath}
-              alt={`Фото ${name}`}
+              alt={name}
               className={styles.thumbnail}
               onClick={() => setIsZoomed(true)}
             />
@@ -73,7 +76,7 @@ function ProductOverview({ item }) {
 
             <div className={styles.priceStockWrapper}>
               <p className={styles.price}>${price}</p>
-              <p className={styles.stock}>В наявності: {stock} шт.</p>
+              <p className={styles.stock}>В наявності: {stockCount} шт.</p>
             </div>
 
             <p>{description}</p>
@@ -90,7 +93,7 @@ function ProductOverview({ item }) {
               <div className={styles.cartGroup}>
                 <Counter
                   min={1}
-                  max={stock || 10}
+                  max={stockCount > 0 ? stockCount : 1}
                   value={value}
                   setValue={setValue}
                 />
@@ -110,15 +113,19 @@ function ProductOverview({ item }) {
 
       {isZoomed && (
         <div className={styles.lightbox} onClick={() => setIsZoomed(false)}>
-          <button className={styles.closeBtn}>
+          <button
+            type="button"
+            className={styles.closeBtn}
+            onClick={() => setIsZoomed(false)}
+          >
             <X size={32} color="white" />
           </button>
 
           <img
             src={imgPath}
-            alt={`Збільшене фото ${name}`}
+            alt={name}
             className={styles.zoomedImg}
-            onClick={(e) => e.stopPropagation()}
+            onClick={(event) => event.stopPropagation()}
           />
         </div>
       )}

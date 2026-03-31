@@ -17,7 +17,7 @@ import { getImage } from '@utils/getImage'
 import { useNavigate } from 'react-router-dom'
 
 function TechCard({ item }) {
-  const { id, title, price, amenities = [] } = item
+  const { id, name, price, amenities = [] } = item
   const img = getImage(id)
   const navigate = useNavigate()
 
@@ -46,7 +46,7 @@ function TechCard({ item }) {
     >
       <header className={styles.cardImage}>
         {img ? (
-          <img src={img} alt={title} />
+          <img src={img} alt={name} />
         ) : (
           <div className={styles.imageFallback}>
             <ImageIcon size={48} />
@@ -55,7 +55,7 @@ function TechCard({ item }) {
         )}
       </header>
 
-      <h3 className={styles.cardTitle}>{title}</h3>
+      <h3 className={styles.cardTitle}>{name}</h3>
 
       <ul className={styles.amenitiesList}>
         {amenities.map((amenity) => (

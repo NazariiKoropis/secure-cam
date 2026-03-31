@@ -9,7 +9,7 @@ import Container from '@layout/container/Container'
 //local components
 import ProductOverview from './blocks/product-overview/ProductOverview'
 import Recomendations from './blocks/recomendations/Recomendations'
-import Reviews from './blocks/reviews/reviews'
+import Reviews from './blocks/reviews/Reviews'
 
 //router-dom
 import { useParams } from 'react-router-dom'

@@ -1,0 +1,25 @@
+.starContainer {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.starBtn {
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+
+    color: var(--text-secondary);
+    transition:
+        transform 0.2s,
+        color 0.2s;
+
+    &:hover {
+        transform: scale(1.1);
+    }
+
+    &.active {
+        color: #ffc107;
+    }
+}

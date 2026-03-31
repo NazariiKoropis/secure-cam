@@ -22,7 +22,11 @@ export const getAllProducts = async () => {
 
 export const getProductById = async (id) => {
     try {
-        const querySnapshot = await getDoc(doc(database, `${COLLECTIONS.PRODUCTS}/${id}`));
+        const querySnapshot = await getDoc(doc(database, COLLECTIONS.PRODUCTS, id));
+
+        if (!querySnapshot.exists()) {
+            return null;
+        }
 
         const product = {
             id: querySnapshot.id,

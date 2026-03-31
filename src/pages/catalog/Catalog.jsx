@@ -120,7 +120,7 @@ function Catalog() {
     }
 
     if (normalizedActiveFilters.inStock) {
-      result = result.filter((product) => product.inStock === true)
+      result = result.filter((product) => Number(product.stock) > 0)
     }
 
     result = result.filter(

@@ -1,0 +1,41 @@
+@use "@styles/variables" as *;
+
+.reviewsSection {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.title {
+    font-size: 1.5rem;
+    padding: 8px 0px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.reviewForm {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+}
+
+.inputWrapper {
+    flex: 1;
+}
+
+.emptyReviews {
+    text-align: center;
+    font-size: 1.5rem;
+    padding: 8px;
+}
+
+.reviewsList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}

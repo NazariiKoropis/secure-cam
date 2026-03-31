@@ -27,9 +27,9 @@ function AuthModal({ isOpen, onClose }) {
       title={isLogin ? 'Вхід у систему' : 'Реєстрація'}
     >
       {isLogin ? (
-        <LoginForm onSuccess={onClose} />
+        <LoginForm onSuccess={handleClose} />
       ) : (
-        <RegisterForm onSuccess={onClose} />
+        <RegisterForm onSuccess={handleClose} />
       )}
 
       <footer className={styles.footer}>
