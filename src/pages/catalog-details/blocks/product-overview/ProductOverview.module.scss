@@ -122,6 +122,12 @@
 .title {
     font-size: $fz-h1;
 }
+
+.category {
+    color: var(--text-secondary);
+    font-size: $fz-small;
+}
+
 .priceStockWrapper {
     display: flex;
     align-items: center;

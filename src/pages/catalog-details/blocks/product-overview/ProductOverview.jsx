@@ -36,7 +36,6 @@ function ProductOverview({ item }) {
   const breadCrumbs = [
     { path: '/', name: 'Home' },
     { path: '/catalog', name: 'Catalog' },
-    { path: '/catalog', name: category },
     { path: `/catalog/${id}`, name: name },
   ]
 
@@ -73,6 +72,7 @@ function ProductOverview({ item }) {
 
           <div className={styles.infoWrapper}>
             <h1 className={styles.title}>{name}</h1>
+            <p className={styles.category}>Категорія: {category}</p>
 
             <div className={styles.priceStockWrapper}>
               <p className={styles.price}>${price}</p>
