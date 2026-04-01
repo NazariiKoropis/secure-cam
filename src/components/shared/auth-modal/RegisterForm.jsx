@@ -10,7 +10,6 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 
-//api - ПЕРЕЙМЕНУВАЛИ ІМПОРТ
 import { register as registerUser } from '@/api/auth.service'
 
 const registerSchema = z
@@ -42,7 +41,7 @@ const registerSchema = z
 
 function RegisterForm({ onSuccess }) {
   const {
-    register, // Це функція для інпутів (від react-hook-form)
+    register,
     handleSubmit,
     setError,
     formState: { errors, isSubmitting },

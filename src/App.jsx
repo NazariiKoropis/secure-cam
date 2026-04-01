@@ -25,30 +25,55 @@ import { useAuthListener } from '@hooks/useAuthListener'
 //route
 import ProtectedRoute from './routes/ProtectedRoute'
 
+import { Toaster } from 'react-hot-toast'
+
 function App() {
   const { isAuthReady } = useAuthListener()
 
   if (!isAuthReady) return <Loader />
 
   return (
-    <Routes>
-      <Route element={<Layout />}>
-        <Route path={ROUTES.HOME} element={<Home />} />
-        <Route path={ROUTES.CATALOG} element={<Catalog />} />
-        <Route path={ROUTES.CATALOG_ITEM} element={<CatalogDetails />} />
-        <Route path={ROUTES.CALCULATOR} element={<Calculator />} />
+    <>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path={ROUTES.HOME} element={<Home />} />
+          <Route path={ROUTES.CATALOG} element={<Catalog />} />
+          <Route path={ROUTES.CATALOG_ITEM} element={<CatalogDetails />} />
+          <Route path={ROUTES.CALCULATOR} element={<Calculator />} />
 
-        <Route element={<ProtectedRoute />}>
-          <Route path={ROUTES.USER} element={<User />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path={ROUTES.USER} element={<User />} />
+          </Route>
+
+          <Route element={<ProtectedRoute requireAdmin={true} />}>
+            <Route path={ROUTES.ADMIN} element={<Admin />} />
+          </Route>
+
+          <Route path="*" element={<NotFound />} />
         </Route>
+      </Routes>
 
-        <Route element={<ProtectedRoute requireAdmin={true} />}>
-          <Route path={ROUTES.ADMIN} element={<Admin />} />
-        </Route>
+      <Toaster
+        position="bottom-right"
+        toastOptions={{
+          duration: 4000,
+          style: {
+            background: '#333',
+            color: '#fff',
+          },
 
-        <Route path="*" element={<NotFound />} />
-      </Route>
-    </Routes>
+          success: {
+            style: {
+              background: 'var(--success)',
+            },
+            iconTheme: {
+              primary: 'white',
+              secondary: 'var(--success)',
+            },
+          },
+        }}
+      />
+    </>
   )
 }
 

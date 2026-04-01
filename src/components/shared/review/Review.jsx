@@ -24,7 +24,7 @@ const getReviewDate = (review) => {
 
 function Review({ review }) {
   const author = review.userName
-  const text = review.text
+  const text = review.desc
   const date = getReviewDate(review)
   const rating = Number(review.rating)
   const safeRating = Number.isFinite(rating)
