@@ -7,6 +7,7 @@ import Catalog from '@pages/catalog/Catalog'
 import CatalogDetails from '@pages/catalog-details/CatalogDetails'
 import Calculator from '@pages/calculator/Calculator'
 import NotFound from '@pages/not-found/NotFound'
+import Cart from '@pages/cart/Cart'
 
 //pages protected
 import Admin from '@pages/admin/Admin'
@@ -49,6 +50,7 @@ function App() {
             <Route path={ROUTES.ADMIN} element={<Admin />} />
           </Route>
 
+          <Route path={ROUTES.CART} element={<Cart />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

@@ -15,9 +15,16 @@ import { getDate } from '@/utils/getDate'
 //icons
 import { ChevronRight, X } from 'lucide-react'
 
+import { useDispatch } from 'react-redux'
+import { addItem } from '@/redux/cart/cartSlice'
+
+import toast from 'react-hot-toast'
+
 function ProductOverview({ item }) {
   const [value, setValue] = useState(1)
   const [isZoomed, setIsZoomed] = useState(false)
+
+  const dispatch = useDispatch()
 
   const {
     id,
@@ -39,6 +46,19 @@ function ProductOverview({ item }) {
     { path: `/catalog/${id}`, name: name },
   ]
 
+  const addToCart = () => {
+    dispatch(
+      addItem({
+        id,
+        name,
+        price,
+        category,
+        imgPath,
+        quantity: value,
+      }),
+    )
+    toast.success('Товар додано до кошика')
+  }
   return (
     <>
       <section className={styles.overviewWrapper}>
@@ -97,7 +117,14 @@ function ProductOverview({ item }) {
                   value={value}
                   setValue={setValue}
                 />
-                <Button fullWidth>ADD TO CART</Button>
+
+                <Button
+                  onClick={addToCart}
+                  fullWidth
+                  disabled={stockCount === 0}
+                >
+                  {stockCount === 0 ? 'OUT OF STOCK' : 'ADD TO CART'}
+                </Button>
               </div>
               <Button variant="ghost" fullWidth>
                 CALCULATE IN KIT
