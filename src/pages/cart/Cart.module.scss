@@ -1,0 +1,271 @@
+@use "@styles/variables" as *;
+@use "@styles/mixins" as *;
+
+.cartSection {
+    padding: 40px 0 80px;
+}
+
+.title {
+    font-size: 2rem;
+    margin-bottom: 32px;
+}
+
+.emptyCart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 100px 20px;
+    text-align: center;
+    gap: 16px;
+
+    h2 {
+        font-size: 2rem;
+    }
+
+    p {
+        color: var(--text-secondary);
+        margin-bottom: 16px;
+    }
+}
+
+.cartLayout {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 32px;
+    align-items: start;
+
+    @include tablet {
+        grid-template-columns: 1fr;
+    }
+}
+
+.itemsList {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.cartItem {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 16px;
+    background-color: var(--bg-surface-light);
+    border-radius: $border-radius;
+    border: 1px solid var(--border-color);
+
+    @include mobile {
+        flex-direction: column;
+        align-items: flex-start;
+        position: relative;
+        gap: 16px;
+    }
+}
+
+.imageWrapper {
+    width: 100px;
+    height: 100px;
+    flex-shrink: 0;
+    background-color: white;
+    border-radius: $border-radius;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+}
+
+.itemInfo {
+    flex: 1;
+
+    h3 {
+        font-size: 1.125rem;
+        margin-bottom: 4px;
+        color: var(--text-primary);
+    }
+
+    .category {
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+    }
+}
+
+.itemPrice {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    min-width: 100px;
+
+    p {
+        font-weight: $fw-bold;
+        font-size: 1rem;
+    }
+
+    span {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        margin-top: 4px;
+    }
+
+    @include mobile {
+        align-items: flex-start;
+    }
+}
+
+.itemTotal {
+    min-width: 100px;
+    text-align: right;
+    font-size: 1.25rem;
+    font-weight: $fw-bold;
+    color: var(--text-primary);
+
+    @include mobile {
+        text-align: left;
+    }
+}
+
+.deleteBtn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 8px;
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+
+    &:hover {
+        color: #ff4d4f;
+        transform: scale(1.1);
+    }
+
+    @include mobile {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+    }
+}
+
+.summary {
+    background-color: var(--bg-surface-light);
+    padding: 24px;
+    border-radius: $border-radius;
+    border: 1px solid var(--border-color);
+
+    position: sticky;
+    top: 24px;
+
+    h2 {
+        font-size: 1.25rem;
+        margin-bottom: 24px;
+    }
+}
+
+.summaryRow {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.divider {
+    border: none;
+    border-top: 1px solid var(--border-color);
+    margin: 20px 0;
+}
+
+.summaryTotal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.25rem;
+    font-weight: $fw-bold;
+    margin-bottom: 24px;
+    color: var(--text-primary);
+}
+
+.leftColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.servicesBlock {
+    h2 {
+        font-size: 1.25rem;
+        margin-bottom: 16px;
+        color: var(--text-primary);
+    }
+}
+
+.servicesList {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px;
+}
+
+.serviceCard {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    background-color: var(--bg-surface-light);
+    border: 2px solid var(--border-color);
+    border-radius: $border-radius;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+
+    &:hover {
+        border-color: var(--text-secondary);
+    }
+
+    &.active {
+        border-color: var(--accent-primary);
+        background-color: rgba(var(--accent-primary-rgb), 0.05);
+    }
+}
+
+.checkbox {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    border: 2px solid var(--border-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-color: transparent;
+    transition: all 0.2s;
+    flex-shrink: 0;
+
+    .active & {
+        background-color: var(--accent-primary);
+        border-color: var(--accent-primary);
+    }
+}
+
+.serviceInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    p {
+        font-weight: $fw-medium;
+        color: var(--text-primary);
+        font-size: 0.95rem;
+    }
+
+    span {
+        color: var(--accent-primary);
+        font-weight: $fw-bold;
+        font-size: 0.85rem;
+    }
+}
