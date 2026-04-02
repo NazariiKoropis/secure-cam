@@ -13,7 +13,7 @@ import {
     setUserRole,
     removeUser,
     setAuthReady,
-} from '@store/user/userSlice';
+} from '@redux/user/userSlice';
 
 export const useAuthListener = () => {
     const dispatch = useDispatch();

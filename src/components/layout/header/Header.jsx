@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom'
 //components
 import Container from '@layout/container/Container'
 import Logo from '@shared/Logo/Logo'
-import AuthModal from '@/components/shared/auth-modal/AuthModal'
+import AuthModal from '@shared/auth-modal/AuthModal'
 
 //header components
 import Nav from './blocks/nav/Nav'
@@ -25,7 +25,7 @@ import { ROUTES } from '@constants/routes'
 import { useSelector } from 'react-redux'
 
 //api
-import { logout } from '@/api/auth.service'
+import { logout } from '@api/auth.service'
 
 //nav items
 const NAV_ITEMS = [

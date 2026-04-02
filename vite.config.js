@@ -10,8 +10,6 @@ export default defineConfig(({ mode }) => ({
 
   resolve: {
     alias: {
-      // basic
-      '@': path.resolve(__dirname, './src'),
 
       // components
       '@ui': path.resolve(__dirname, './src/components/ui'),
@@ -31,7 +29,7 @@ export default defineConfig(({ mode }) => ({
       '@pages': path.resolve(__dirname, './src/pages'),
 
       // store
-      '@store': path.resolve(__dirname, './src/redux'),
+      '@redux': path.resolve(__dirname, './src/redux'),
 
       // utils
       '@utils': path.resolve(__dirname, './src/utils'),

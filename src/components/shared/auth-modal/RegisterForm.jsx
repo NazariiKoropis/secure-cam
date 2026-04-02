@@ -10,7 +10,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 
-import { register as registerUser } from '@/api/auth.service'
+import { register as registerUser } from '@api/auth.service'
 
 const registerSchema = z
   .object({

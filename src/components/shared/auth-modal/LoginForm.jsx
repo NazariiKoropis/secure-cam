@@ -11,7 +11,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 
 //api
-import { login } from '@/api/auth.service'
+import { login } from '@api/auth.service'
 
 const loginSchema = z.object({
   email: z.string().email({ message: 'Невірний формат пошти' }),

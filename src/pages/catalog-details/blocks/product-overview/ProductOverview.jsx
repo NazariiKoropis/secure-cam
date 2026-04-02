@@ -9,14 +9,14 @@ import Button from '@ui/button/Button'
 import Counter from '@ui/counter/Counter'
 
 //util
-import { getImage } from '@/utils/getImage'
-import { getDate } from '@/utils/getDate'
+import { getImage } from '@utils/getImage'
+import { getDate } from '@utils/getDate'
 
 //icons
 import { ChevronRight, X } from 'lucide-react'
 
 import { useDispatch } from 'react-redux'
-import { addItem } from '@/redux/cart/cartSlice'
+import { addItem } from '@redux/cart/cartSlice'
 
 import toast from 'react-hot-toast'
 

@@ -8,7 +8,7 @@ import Input from '@ui/input/Input'
 
 // redux
 import { useSelector, useDispatch } from 'react-redux'
-import { clearCart } from '@/redux/cart/cartSlice' // ДОДАНО: екшен очищення кошика
+import { clearCart } from '@redux/cart/cartSlice' // ДОДАНО: екшен очищення кошика
 
 //form libs
 import { useForm } from 'react-hook-form'

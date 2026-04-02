@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { ShoppingCart } from 'lucide-react'
 import styles from './CartWidget.module.scss'
-import { ROUTES } from '@/constants/routes' // Твої роути
+import { ROUTES } from '@constants/routes' // Твої роути
 
 function CartWidget() {
   const navigate = useNavigate()

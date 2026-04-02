@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 // redux
 import { useSelector, useDispatch } from 'react-redux'
-import { removeItem } from '@/redux/cart/cartSlice'
+import { removeItem } from '@redux/cart/cartSlice'
 
 // router
 import { Link } from 'react-router-dom'

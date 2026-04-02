@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 // redux & notifications
 import { useDispatch } from 'react-redux'
-import { addItem } from '@/redux/cart/cartSlice'
+import { addItem } from '@redux/cart/cartSlice'
 import toast from 'react-hot-toast'
 
 // components
