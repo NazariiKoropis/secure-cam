@@ -11,6 +11,8 @@ import { Link } from 'react-router-dom'
 // components
 import Button from '@ui/button/Button'
 import Container from '@layout/container/Container'
+import AuthModal from '@shared/auth-modal/AuthModal'
+import OrderModal from '@shared/order-modal/OrderModal'
 
 // icons
 import { Trash2, Check } from 'lucide-react'
@@ -23,6 +25,9 @@ const ADDITIONAL_SERVICES = [
 
 function Cart() {
   const { items } = useSelector((state) => state.cart)
+  const { currentUser } = useSelector((state) => state.user)
+
+  const [isOpen, setIsOpen] = useState(false)
   const dispatch = useDispatch()
 
   const [selectedServices, setSelectedServices] = useState([])
@@ -40,11 +45,22 @@ function Cart() {
     0,
   )
 
-  const servicesTotalPrice = ADDITIONAL_SERVICES.filter((service) =>
+  const selectedServicesData = ADDITIONAL_SERVICES.filter((service) =>
     selectedServices.includes(service.id),
-  ).reduce((sum, service) => sum + service.price, 0)
+  )
+
+  const servicesTotalPrice = selectedServicesData.reduce(
+    (sum, service) => sum + service.price,
+    0,
+  )
 
   const finalTotal = itemsTotalPrice + servicesTotalPrice
+
+  const orderPayload = {
+    items: items,
+    services: selectedServicesData,
+    totalPrice: finalTotal,
+  }
 
   if (items.length === 0) {
     return (
@@ -59,6 +75,8 @@ function Cart() {
       </Container>
     )
   }
+
+  const ModalComponent = !currentUser ? AuthModal : OrderModal
 
   return (
     <Container>
@@ -159,10 +177,20 @@ function Cart() {
               <span>${finalTotal}</span>
             </div>
 
-            <Button fullWidth>ОФОРМИТИ ЗАМОВЛЕННЯ</Button>
+            <Button onClick={() => setIsOpen(true)} fullWidth>
+              ОФОРМИТИ ЗАМОВЛЕННЯ
+            </Button>
           </aside>
         </div>
       </section>
+
+      {isOpen && (
+        <ModalComponent
+          isOpen={isOpen}
+          onClose={() => setIsOpen(false)}
+          orderData={orderPayload}
+        />
+      )}
     </Container>
   )
 }

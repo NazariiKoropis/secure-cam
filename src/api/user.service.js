@@ -18,3 +18,23 @@ export const getUserRoleByID = async (uid) => {
         return null
     }
 }
+
+
+export const getUserPhoneByID = async (uid) => {
+    try {
+        const docRef = doc(database, COLLECTIONS.USERS, uid);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+
+            return docSnap.data()?.phone || '';
+        } else {
+            console.warn(`Користувача з ID ${uid} не знайдено в базі.`);
+            return '';
+        }
+
+    } catch (error) {
+        console.error('Помилка при отриманні телефону:', error);
+        return '';
+    }
+}
