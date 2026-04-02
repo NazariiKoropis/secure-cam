@@ -1,0 +1,300 @@
+@use "@styles/variables" as *;
+@use "@styles/mixins" as *;
+
+.calcSection {
+    padding: 40px 0 80px;
+}
+
+.header {
+    margin-bottom: 40px;
+
+    .title {
+        font-size: 2.5rem;
+        margin-bottom: 12px;
+        color: var(--text-primary);
+    }
+
+    .subtitle {
+        font-size: 1.125rem;
+        color: var(--text-secondary);
+        max-width: 600px;
+    }
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 40px;
+    align-items: start;
+
+    @include tablet {
+        grid-template-columns: 1fr;
+    }
+}
+
+.configurator {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+.block {
+    h2 {
+        font-size: 1.25rem;
+        margin-bottom: 24px;
+        color: var(--text-primary);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+}
+
+.tierGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+}
+
+.tierCard {
+    position: relative;
+    border: 2px solid var(--border-color);
+    border-radius: $border-radius;
+    padding: 24px 20px;
+    cursor: pointer;
+    background-color: var(--bg-surface-light);
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+
+    &:hover {
+        border-color: var(--text-secondary);
+    }
+
+    &.active {
+        border-color: var(--accent-primary);
+        background-color: rgba(var(--accent-primary-rgb), 0.05);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+        .tierIcon {
+            color: var(--accent-primary);
+        }
+    }
+}
+
+.tierIcon {
+    color: var(--text-secondary);
+    transition: color 0.2s;
+}
+
+.tierInfo {
+    h3 {
+        font-size: 1.125rem;
+        margin-bottom: 4px;
+    }
+    p {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+    }
+}
+
+.tierPrice {
+    margin-top: auto;
+    font-size: 1.25rem;
+    font-weight: $fw-bold;
+    color: var(--text-primary);
+}
+
+.activeCheck {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 24px;
+    height: 24px;
+    background-color: var(--accent-primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.devicesList {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.deviceRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius;
+    background-color: var(--bg-surface-light);
+}
+
+.deviceInfo {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    .iconWrapper {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        background-color: var(--bg-body);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-secondary);
+    }
+
+    .deviceName {
+        font-weight: $fw-medium;
+        font-size: 1rem;
+    }
+
+    .devicePrice {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+    }
+}
+
+.counter {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background-color: var(--bg-body);
+    padding: 4px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+
+    button {
+        background: transparent;
+        border: none;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: var(--text-primary);
+        border-radius: 6px;
+        transition: background-color 0.2s;
+
+        &:hover {
+            background-color: var(--border-color);
+        }
+    }
+
+    span {
+        font-weight: $fw-bold;
+        width: 24px;
+        text-align: center;
+    }
+}
+
+.extrasList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.extraCard {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+
+    &:hover {
+        border-color: var(--text-secondary);
+    }
+
+    &.active {
+        border-color: var(--accent-primary);
+    }
+
+    .checkbox {
+        width: 24px;
+        height: 24px;
+        border-radius: 6px;
+        border: 2px solid var(--border-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        transition: all 0.2s;
+
+        .active & {
+            background-color: var(--accent-primary);
+            border-color: var(--accent-primary);
+        }
+    }
+
+    .extraName {
+        flex: 1;
+        font-weight: $fw-medium;
+    }
+
+    .extraPrice {
+        font-weight: $fw-bold;
+        color: var(--text-primary);
+    }
+}
+
+.summaryPanel {
+    background-color: var(--bg-surface-light);
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius;
+    padding: 32px;
+    position: sticky;
+    top: 24px;
+
+    h2 {
+        font-size: 1.5rem;
+        margin-bottom: 24px;
+    }
+}
+
+.summaryRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 1rem;
+    color: var(--text-primary);
+
+    .subText {
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+    }
+}
+
+.divider {
+    border: none;
+    border-top: 1px dashed var(--border-color);
+    margin: 24px 0;
+}
+
+.totalRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: $fw-bold;
+    margin-bottom: 32px;
+}
+
+.guarantee {
+    margin-top: 16px;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
