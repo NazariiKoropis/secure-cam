@@ -6,6 +6,9 @@ import { getUserById } from '@api/user.service'
 
 import Loader from '@layout/loader/Loader'
 
+//local components
+import UserOverview from './user-overview/UserOverview'
+
 function User() {
   const { currentUser } = useSelector((state) => state.user)
 
@@ -19,7 +22,7 @@ function User() {
 
   if (!user) return null
 
-  return <div>{user.displayName}</div>
+  return <UserOverview user={user} />
 }
 
 export default User
