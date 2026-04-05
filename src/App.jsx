@@ -12,9 +12,13 @@ import Cart from '@pages/cart/Cart'
 //pages protected
 import Admin from '@pages/admin/Admin'
 import User from '@pages/user/User'
+import AdminDashboard from '@pages/admin/blocks/admin-dashboard/AdminDashboard'
+import AdminOrders from '@pages/admin/blocks/admin-orders/AdminOrder'
+import AdminProducts from '@pages/admin/blocks/admin-products/AdminProducts'
+import AdminReviews from '@pages/admin/blocks/admin-reviews/AdminReviews'
 
 //constants
-import { ROUTES } from '@constants/routes'
+import { ADMIN_ROUTES, ROUTES } from '@constants/routes'
 
 //components
 import Layout from '@layout/Layout'
@@ -47,7 +51,12 @@ function App() {
           </Route>
 
           <Route element={<ProtectedRoute requireAdmin={true} />}>
-            <Route path={ROUTES.ADMIN} element={<Admin />} />
+            <Route path={ROUTES.ADMIN} element={<Admin />}>
+              <Route index element={<AdminDashboard />} />
+              <Route path={ADMIN_ROUTES.ORDERS} element={<AdminOrders />} />
+              <Route path={ADMIN_ROUTES.PRODUCTS} element={<AdminProducts />} />
+              <Route path={ADMIN_ROUTES.REVIEWS} element={<AdminReviews />} />
+            </Route>
           </Route>
 
           <Route path={ROUTES.CART} element={<Cart />} />

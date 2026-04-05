@@ -11,3 +11,10 @@ export const ROUTES = {
     DELIVERY: '/delivery',
     PRIVACY: '/privacy',
 };
+
+export const ADMIN_ROUTES = {
+    ADMIN: '/admin',
+    ORDERS: 'orders',
+    PRODUCTS: 'products',
+    REVIEWS: 'reviews',
+};
