@@ -47,7 +47,7 @@ const ADMIN_NAV_LINKS = [
 function AdminControl({ user }) {
   const {
     displayName = 'Адміністратор',
-    email = 'Email не вказано',
+    email = 'Електронна пошта не вказана',
     photoURL,
   } = user || {}
 
@@ -73,7 +73,7 @@ function AdminControl({ user }) {
             <div className={styles.profileContent}>
               <span className={styles.badge}>
                 <ShieldCheck size={16} />
-                Admin panel
+                Панель адміністратора
               </span>
 
               <h1 className={styles.title}>Панель керування</h1>

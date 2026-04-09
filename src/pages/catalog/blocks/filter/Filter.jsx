@@ -78,7 +78,7 @@ function Filter({
 
         <div className={styles.filterGroup}>
           <RangeInput
-            label="Ціна ($)"
+            label="Ціна (грн)"
             min={priceRangeLimits[0]}
             max={priceRangeLimits[1]}
             step={10}

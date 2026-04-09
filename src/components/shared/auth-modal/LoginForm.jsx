@@ -59,7 +59,7 @@ function LoginForm({ onSuccess }) {
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <Input
         type="email"
-        label="Email"
+        label="Електронна пошта"
         {...register('email')}
         error={errors.email?.message}
       />

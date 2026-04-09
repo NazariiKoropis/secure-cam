@@ -12,17 +12,17 @@ function Hero({ sortValue, sortOptions, onSortChange }) {
     <section className={styles.heroSection}>
       <Container className={styles.heroContainer}>
         <div className={styles.heroWrapper}>
-          <h1 className={styles.title}>Security Equipment Catalog</h1>
+          <h1 className={styles.title}>Каталог охоронного обладнання</h1>
           <p className={styles.desc}>
-            Professional-grade surveillance hardware optimized for
-            high-performance monitoring and environmental resilience.
+            Професійні рішення відеоспостереження, оптимізовані для
+            стабільної роботи та складних умов експлуатації.
           </p>
         </div>
 
         <div className={styles.filterWrapper}>
           <ComboBox
             name="sort"
-            label="Sort by"
+            label="Сортувати за"
             value={sortValue}
             options={sortOptions}
             onChange={onSortChange}

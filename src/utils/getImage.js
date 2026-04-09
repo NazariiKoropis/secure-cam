@@ -1,5 +1,9 @@
 const imageTech = import.meta.glob('/src/assets/images/catalog/*.{png,jpg,jpeg,svg}', { eager: true })
 
+const isDirectImagePath = (value) =>
+    typeof value === 'string' &&
+    /^(https?:\/\/|\/|data:|blob:)/i.test(value)
+
 const findImage = (imageCollection, imageName) => {
     if (!imageName) return null
 
@@ -16,4 +20,10 @@ const findImage = (imageCollection, imageName) => {
     return null
 }
 
-export const getImage = (imageName) => findImage(imageTech, imageName)
+export const getImage = (imageName) => {
+    if (isDirectImagePath(imageName)) {
+        return imageName
+    }
+
+    return findImage(imageTech, imageName)
+}

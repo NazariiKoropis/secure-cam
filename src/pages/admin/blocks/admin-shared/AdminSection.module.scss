@@ -33,6 +33,12 @@
     max-width: 760px;
 }
 
+.heroActions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
 .eyebrow {
     display: inline-flex;
     width: fit-content;
@@ -107,6 +113,16 @@
         border-color: rgba(37, 99, 235, 0.32);
         outline: none;
     }
+}
+
+.fileInput {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px dashed rgba(37, 99, 235, 0.28);
+    border-radius: 14px;
+    background-color: rgba(37, 99, 235, 0.04);
+    color: var(--text-primary);
+    font: inherit;
 }
 
 .filterGroup {
@@ -463,6 +479,30 @@
 .fieldError {
     color: var(--error);
     font-size: 0.9rem;
+}
+
+.helperText {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.previewCard {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+    border-radius: 16px;
+    background-color: var(--bg-main);
+}
+
+.previewImage {
+    width: 100%;
+    max-height: 220px;
+    object-fit: contain;
+    border-radius: 12px;
+    background-color: #fff;
 }
 
 .modalActions {

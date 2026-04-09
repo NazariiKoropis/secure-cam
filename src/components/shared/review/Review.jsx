@@ -42,7 +42,7 @@ function Review({ review }) {
         {safeRating !== null && (
           <p
             className={styles.rating}
-            aria-label={`Rating: ${safeRating} out of 5`}
+            aria-label={`Оцінка: ${safeRating} з 5`}
           >
             {'★'.repeat(safeRating)}
             {'☆'.repeat(5 - safeRating)}

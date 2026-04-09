@@ -12,13 +12,14 @@ import { ROUTES } from '@constants/routes'
 
 // utils
 import { getImage } from '@utils/getImage'
+import { formatCurrency } from '@utils/formatCurrency'
 
 // router-dom
 import { useNavigate } from 'react-router-dom'
 
 function TechCard({ item }) {
-  const { id, name, price, amenities = [] } = item
-  const img = getImage(id)
+  const { id, name, price, amenities = [], imagePath } = item
+  const img = getImage(imagePath || id)
   const navigate = useNavigate()
 
   const onTechCardClick = () => {
@@ -66,7 +67,7 @@ function TechCard({ item }) {
       </ul>
 
       <footer className={styles.cardFooter}>
-        <p className={styles.price}>$ {price}</p>
+        <p className={styles.price}>{formatCurrency(price)}</p>
         <Button onClick={onAddItemClick}>
           <ShoppingBag />
         </Button>

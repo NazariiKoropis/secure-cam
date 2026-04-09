@@ -11,9 +11,10 @@ import Counter from '@ui/counter/Counter'
 //util
 import { getImage } from '@utils/getImage'
 import { getDate } from '@utils/getDate'
+import { formatCurrency } from '@utils/formatCurrency'
 
 //icons
-import { ChevronRight, X } from 'lucide-react'
+import { ChevronRight, Image as ImageIcon, X } from 'lucide-react'
 
 import { useDispatch } from 'react-redux'
 import { addItem } from '@redux/cart/cartSlice'
@@ -35,14 +36,15 @@ function ProductOverview({ item }) {
     category,
     amenities = [],
     createdAt,
+    imagePath,
   } = item
 
   const stockCount = Number.isFinite(Number(stock)) ? Number(stock) : 0
-  const imgPath = getImage(id)
+  const imgPath = getImage(imagePath || id)
 
   const breadCrumbs = [
-    { path: '/', name: 'Home' },
-    { path: '/catalog', name: 'Catalog' },
+    { path: '/', name: 'Головна' },
+    { path: '/catalog', name: 'Каталог' },
     { path: `/catalog/${id}`, name: name },
   ]
 
@@ -82,12 +84,19 @@ function ProductOverview({ item }) {
 
         <div className={styles.contentWrapper}>
           <div className={styles.imageWrapper}>
-            <img
-              src={imgPath}
-              alt={name}
-              className={styles.thumbnail}
-              onClick={() => setIsZoomed(true)}
-            />
+            {imgPath ? (
+              <img
+                src={imgPath}
+                alt={name}
+                className={styles.thumbnail}
+                onClick={() => setIsZoomed(true)}
+              />
+            ) : (
+              <div className={styles.imageFallback}>
+                <ImageIcon size={56} />
+                <span>Фото ще не додано</span>
+              </div>
+            )}
           </div>
 
           <div className={styles.infoWrapper}>
@@ -95,7 +104,7 @@ function ProductOverview({ item }) {
             <p className={styles.category}>Категорія: {category}</p>
 
             <div className={styles.priceStockWrapper}>
-              <p className={styles.price}>${price}</p>
+              <p className={styles.price}>{formatCurrency(price)}</p>
               <p className={styles.stock}>В наявності: {stockCount} шт.</p>
             </div>
 
@@ -123,11 +132,11 @@ function ProductOverview({ item }) {
                   fullWidth
                   disabled={stockCount === 0}
                 >
-                  {stockCount === 0 ? 'OUT OF STOCK' : 'ADD TO CART'}
+                  {stockCount === 0 ? 'Немає в наявності' : 'Додати в кошик'}
                 </Button>
               </div>
               <Button variant="ghost" fullWidth>
-                CALCULATE IN KIT
+                Розрахувати в комплекті
               </Button>
             </div>
 
@@ -138,7 +147,7 @@ function ProductOverview({ item }) {
         </div>
       </section>
 
-      {isZoomed && (
+      {isZoomed && imgPath && (
         <div className={styles.lightbox} onClick={() => setIsZoomed(false)}>
           <button
             type="button"

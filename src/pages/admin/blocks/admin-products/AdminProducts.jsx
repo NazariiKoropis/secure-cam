@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import * as z from 'zod'
 import toast from 'react-hot-toast'
 
@@ -11,7 +11,13 @@ import ErrorMessage from '@shared/error-message/ErrorMessage'
 import Modal from '@ui/modal/Modal'
 import Button from '@ui/button/Button'
 
-import { getAllProducts, updateProductById } from '@api/product.service'
+import {
+  createProduct,
+  getAllProducts,
+  updateProductById,
+} from '@api/product.service'
+
+import { getImage } from '@utils/getImage'
 
 import styles from '../admin-shared/AdminSection.module.scss'
 import {
@@ -36,6 +42,9 @@ const productSchema = z.object({
     message: 'Занадто довге значення',
   }),
   amenities: z.string().trim(),
+  imagePath: z.string().trim().max(300, {
+    message: 'Шлях до зображення занадто довгий',
+  }),
 })
 
 const STOCK_FILTER_OPTIONS = [
@@ -45,12 +54,83 @@ const STOCK_FILTER_OPTIONS = [
   { value: 'out-of-stock', label: 'Немає в наявності' },
 ]
 
+const isFileSystemUploadSupported = () =>
+  typeof window !== 'undefined' && 'showDirectoryPicker' in window
+
+const sanitizeFileName = (value) =>
+  value
+    .toLowerCase()
+    .normalize('NFKD')
+    .replace(/[^\w\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .slice(0, 48) || 'product'
+
+const getFileExtension = (fileName) => {
+  const parts = fileName.split('.')
+
+  return parts.length > 1 ? parts.pop().toLowerCase() : 'png'
+}
+
+const buildProductPayload = (data, imagePath) => {
+  const payload = {
+    name: data.name.trim(),
+    price: Number(data.price),
+    stock: Number(data.stock),
+    category: data.category.trim(),
+    description: data.description.trim(),
+    resolution: data.resolution.trim(),
+    amenities: normalizeAmenities(data.amenities),
+    imagePath: imagePath?.trim() || '',
+  }
+
+  return Object.fromEntries(
+    Object.entries(payload).filter(([, value]) => {
+      if (Array.isArray(value)) return value.length > 0
+      if (typeof value === 'string') return value.trim().length > 0
+
+      return value !== undefined && value !== null
+    }),
+  )
+}
+
+const saveImageToProject = async (file, productName) => {
+  if (!isFileSystemUploadSupported()) {
+    throw new Error(
+      'Ваш браузер не підтримує запис файлів у проект. Додайте фото вручну в public/catalog-images і вкажіть шлях.',
+    )
+  }
+
+  const directoryHandle = await window.showDirectoryPicker({
+    mode: 'readwrite',
+  })
+
+  if (directoryHandle.name !== 'catalog-images') {
+    throw new Error('Оберіть папку public/catalog-images у проекті.')
+  }
+
+  const extension = getFileExtension(file.name)
+  const fileName = `${sanitizeFileName(productName)}-${Date.now()}.${extension}`
+  const fileHandle = await directoryHandle.getFileHandle(fileName, {
+    create: true,
+  })
+  const writable = await fileHandle.createWritable()
+
+  await writable.write(await file.arrayBuffer())
+  await writable.close()
+
+  return `/catalog-images/${fileName}`
+}
+
 function AdminProducts() {
   const queryClient = useQueryClient()
   const [searchValue, setSearchValue] = useState('')
   const [categoryFilter, setCategoryFilter] = useState('all')
   const [stockFilter, setStockFilter] = useState('all')
   const [selectedProduct, setSelectedProduct] = useState(null)
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
+  const [createImageFile, setCreateImageFile] = useState(null)
 
   const {
     data: products,
@@ -63,10 +143,14 @@ function AdminProducts() {
   })
 
   const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors, isSubmitting },
+    register: registerCreate,
+    handleSubmit: handleSubmitCreate,
+    reset: resetCreate,
+    control: createControl,
+    formState: {
+      errors: createErrors,
+      isSubmitting: isCreateFormSubmitting,
+    },
   } = useForm({
     resolver: zodResolver(productSchema),
     defaultValues: {
@@ -77,13 +161,36 @@ function AdminProducts() {
       description: '',
       resolution: '',
       amenities: '',
+      imagePath: '',
+    },
+  })
+
+  const {
+    register: registerEdit,
+    handleSubmit: handleSubmitEdit,
+    reset: resetEdit,
+    formState: {
+      errors: editErrors,
+      isSubmitting: isEditFormSubmitting,
+    },
+  } = useForm({
+    resolver: zodResolver(productSchema),
+    defaultValues: {
+      name: '',
+      price: 0,
+      stock: 0,
+      category: '',
+      description: '',
+      resolution: '',
+      amenities: '',
+      imagePath: '',
     },
   })
 
   useEffect(() => {
     if (!selectedProduct) return
 
-    reset({
+    resetEdit({
       name: selectedProduct.name || '',
       price: Number(selectedProduct.price) || 0,
       stock: Number(selectedProduct.stock) || 0,
@@ -93,8 +200,52 @@ function AdminProducts() {
       amenities: Array.isArray(selectedProduct.amenities)
         ? selectedProduct.amenities.join(', ')
         : '',
+      imagePath: selectedProduct.imagePath || '',
     })
-  }, [reset, selectedProduct])
+  }, [resetEdit, selectedProduct])
+
+  const createImagePreview = useMemo(() => {
+    if (!createImageFile) return ''
+
+    return URL.createObjectURL(createImageFile)
+  }, [createImageFile])
+
+  useEffect(() => {
+    if (!createImagePreview) return undefined
+
+    return () => URL.revokeObjectURL(createImagePreview)
+  }, [createImagePreview])
+
+  const createProductMutation = useMutation({
+    mutationFn: async (payload) => {
+      const result = await createProduct(payload)
+
+      if (!result) {
+        throw new Error('Failed to create product')
+      }
+
+      return result
+    },
+    onSuccess: async () => {
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ['admin', 'products'] }),
+        queryClient.invalidateQueries({ queryKey: ['admin', 'dashboard'] }),
+        queryClient.invalidateQueries({ queryKey: ['products'] }),
+      ])
+
+      toast.success('Новий товар успішно додано.')
+      resetCreate()
+      setCreateImageFile(null)
+      setIsCreateModalOpen(false)
+    },
+    onError: (error) => {
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : 'Не вдалося створити новий товар.',
+      )
+    },
+  })
 
   const updateProductMutation = useMutation({
     mutationFn: async ({ id, payload }) => {
@@ -161,6 +312,7 @@ function AdminProducts() {
           product.category,
           product.description,
           product.resolution,
+          product.imagePath,
         ]
           .filter(Boolean)
           .join(' ')
@@ -169,7 +321,8 @@ function AdminProducts() {
         return haystack.includes(normalizedSearch)
       })
       .sort((a, b) => {
-        const dateDiff = getTimestampValue(b.createdAt) - getTimestampValue(a.createdAt)
+        const dateDiff =
+          getTimestampValue(b.createdAt) - getTimestampValue(a.createdAt)
 
         if (dateDiff !== 0) return dateDiff
 
@@ -177,20 +330,36 @@ function AdminProducts() {
       })
   }, [products, searchValue, categoryFilter, stockFilter])
 
-  const onSubmit = (data) => {
+  const createImagePathValue = useWatch({
+    control: createControl,
+    name: 'imagePath',
+  })
+  const createPreviewSource =
+    createImagePreview || getImage(createImagePathValue || null)
+
+  const onCreateImageChange = (event) => {
+    const [file] = event.target.files || []
+    setCreateImageFile(file || null)
+  }
+
+  const onCreateSubmit = async (data) => {
+    let finalImagePath = data.imagePath.trim()
+
+    if (createImageFile) {
+      finalImagePath = await saveImageToProject(createImageFile, data.name)
+    }
+
+    await createProductMutation.mutateAsync(
+      buildProductPayload(data, finalImagePath),
+    )
+  }
+
+  const onEditSubmit = async (data) => {
     if (!selectedProduct) return
 
-    updateProductMutation.mutate({
+    await updateProductMutation.mutateAsync({
       id: selectedProduct.id,
-      payload: {
-        name: data.name.trim(),
-        price: Number(data.price),
-        stock: Number(data.stock),
-        category: data.category.trim(),
-        description: data.description.trim(),
-        resolution: data.resolution.trim(),
-        amenities: normalizeAmenities(data.amenities),
-      },
+      payload: buildProductPayload(data, data.imagePath),
     })
   }
 
@@ -224,9 +393,15 @@ function AdminProducts() {
             <span className={styles.eyebrow}>Товари</span>
             <h2 className={styles.title}>Оновлюйте каталог без окремої CMS</h2>
             <p className={styles.subtitle}>
-              Фільтруйте позиції за категорією та залишком, а потім редагуйте
-              ціну, наявність, опис і характеристики прямо в адмінці.
+              Фільтруйте позиції за категорією та залишком, редагуйте наявні
+              товари та додавайте нові записи разом із фото для каталогу.
             </p>
+          </div>
+
+          <div className={styles.heroActions}>
+            <Button onClick={() => setIsCreateModalOpen(true)}>
+              Додати товар
+            </Button>
           </div>
         </div>
 
@@ -348,6 +523,12 @@ function AdminProducts() {
                       </span>
                     </div>
 
+                    {product.imagePath ? (
+                      <p className={styles.helperText}>
+                        Фото: <strong>{product.imagePath}</strong>
+                      </p>
+                    ) : null}
+
                     <p className={styles.description}>
                       {product.description || 'Опис для цього товару ще не додано.'}
                     </p>
@@ -375,19 +556,227 @@ function AdminProducts() {
         </section>
 
         <Modal
+          isOpen={isCreateModalOpen}
+          onClose={() => {
+            setIsCreateModalOpen(false)
+            resetCreate()
+            setCreateImageFile(null)
+          }}
+          title="Додати новий товар"
+        >
+          <form
+            className={styles.modalBody}
+            onSubmit={handleSubmitCreate(onCreateSubmit)}
+          >
+            <div className={styles.modalGrid}>
+              <div className={styles.modalField}>
+                <label className={styles.fieldLabel} htmlFor="create-product-name">
+                  Назва
+                </label>
+                <input id="create-product-name" {...registerCreate('name')} />
+                {createErrors.name && (
+                  <span className={styles.fieldError}>
+                    {createErrors.name.message}
+                  </span>
+                )}
+              </div>
+
+              <div className={styles.modalField}>
+                <label
+                  className={styles.fieldLabel}
+                  htmlFor="create-product-category"
+                >
+                  Категорія
+                </label>
+                <input
+                  id="create-product-category"
+                  {...registerCreate('category')}
+                />
+                {createErrors.category && (
+                  <span className={styles.fieldError}>
+                    {createErrors.category.message}
+                  </span>
+                )}
+              </div>
+
+              <div className={styles.modalField}>
+                <label className={styles.fieldLabel} htmlFor="create-product-price">
+                  Ціна
+                </label>
+                <input
+                  id="create-product-price"
+                  type="number"
+                  min="0"
+                  step="1"
+                  {...registerCreate('price')}
+                />
+                {createErrors.price && (
+                  <span className={styles.fieldError}>
+                    {createErrors.price.message}
+                  </span>
+                )}
+              </div>
+
+              <div className={styles.modalField}>
+                <label className={styles.fieldLabel} htmlFor="create-product-stock">
+                  Залишок
+                </label>
+                <input
+                  id="create-product-stock"
+                  type="number"
+                  min="0"
+                  step="1"
+                  {...registerCreate('stock')}
+                />
+                {createErrors.stock && (
+                  <span className={styles.fieldError}>
+                    {createErrors.stock.message}
+                  </span>
+                )}
+              </div>
+
+              <div className={styles.modalField}>
+                <label
+                  className={styles.fieldLabel}
+                  htmlFor="create-product-resolution"
+                >
+                  Роздільна здатність
+                </label>
+                <input
+                  id="create-product-resolution"
+                  {...registerCreate('resolution')}
+                />
+                {createErrors.resolution && (
+                  <span className={styles.fieldError}>
+                    {createErrors.resolution.message}
+                  </span>
+                )}
+              </div>
+
+              <div className={styles.modalField}>
+                <label
+                  className={styles.fieldLabel}
+                  htmlFor="create-product-amenities"
+                >
+                  Переваги через кому
+                </label>
+                <input
+                  id="create-product-amenities"
+                  {...registerCreate('amenities')}
+                />
+                {createErrors.amenities && (
+                  <span className={styles.fieldError}>
+                    {createErrors.amenities.message}
+                  </span>
+                )}
+              </div>
+            </div>
+
+            <div className={styles.modalField}>
+              <label className={styles.fieldLabel} htmlFor="create-product-description">
+                Опис
+              </label>
+              <textarea
+                id="create-product-description"
+                className={styles.textarea}
+                {...registerCreate('description')}
+              />
+              {createErrors.description && (
+                <span className={styles.fieldError}>
+                  {createErrors.description.message}
+                </span>
+              )}
+            </div>
+
+            <div className={styles.modalField}>
+              <label className={styles.fieldLabel} htmlFor="create-product-image-path">
+                Шлях до існуючого фото
+              </label>
+              <input
+                id="create-product-image-path"
+                placeholder="/catalog-images/example.png"
+                {...registerCreate('imagePath')}
+              />
+              {createErrors.imagePath && (
+                <span className={styles.fieldError}>
+                  {createErrors.imagePath.message}
+                </span>
+              )}
+              <p className={styles.helperText}>
+                Якщо фото вже лежить у проєкті, вкажіть шлях на кшталт
+                ` /catalog-images/camera.png`.
+              </p>
+            </div>
+
+            <div className={styles.modalField}>
+              <label className={styles.fieldLabel} htmlFor="create-product-image-file">
+                Або завантажити нове фото в проєкт
+              </label>
+              <input
+                id="create-product-image-file"
+                className={styles.fileInput}
+                type="file"
+                accept="image/png,image/jpeg,image/jpg,image/webp,image/svg+xml"
+                onChange={onCreateImageChange}
+              />
+              <p className={styles.helperText}>
+                Якщо вибрати файл, браузер попросить обрати папку
+                `public/catalog-images`. Це працює локально в браузерах із
+                File System Access API.
+              </p>
+            </div>
+
+            {createPreviewSource ? (
+              <div className={styles.previewCard}>
+                <span className={styles.fieldLabel}>Попередній перегляд</span>
+                <img
+                  src={createPreviewSource}
+                  alt="Preview"
+                  className={styles.previewImage}
+                />
+              </div>
+            ) : null}
+
+            <div className={styles.modalActions}>
+              <Button
+                type="button"
+                variant="ghost"
+                onClick={() => {
+                  setIsCreateModalOpen(false)
+                  resetCreate()
+                  setCreateImageFile(null)
+                }}
+              >
+                Скасувати
+              </Button>
+              <Button
+                type="submit"
+                disabled={
+                  isCreateFormSubmitting || createProductMutation.isPending
+                }
+              >
+                {isCreateFormSubmitting || createProductMutation.isPending
+                  ? 'Створення...'
+                  : 'Створити товар'}
+              </Button>
+            </div>
+          </form>
+        </Modal>
+
+        <Modal
           isOpen={Boolean(selectedProduct)}
           onClose={() => setSelectedProduct(null)}
           title={selectedProduct ? `Редагування: ${selectedProduct.name}` : ''}
         >
-          <form className={styles.modalBody} onSubmit={handleSubmit(onSubmit)}>
+          <form className={styles.modalBody} onSubmit={handleSubmitEdit(onEditSubmit)}>
             <div className={styles.modalGrid}>
               <div className={styles.modalField}>
                 <label className={styles.fieldLabel} htmlFor="product-name">
                   Назва
                 </label>
-                <input id="product-name" {...register('name')} />
-                {errors.name && (
-                  <span className={styles.fieldError}>{errors.name.message}</span>
+                <input id="product-name" {...registerEdit('name')} />
+                {editErrors.name && (
+                  <span className={styles.fieldError}>{editErrors.name.message}</span>
                 )}
               </div>
 
@@ -395,10 +784,10 @@ function AdminProducts() {
                 <label className={styles.fieldLabel} htmlFor="product-category">
                   Категорія
                 </label>
-                <input id="product-category" {...register('category')} />
-                {errors.category && (
+                <input id="product-category" {...registerEdit('category')} />
+                {editErrors.category && (
                   <span className={styles.fieldError}>
-                    {errors.category.message}
+                    {editErrors.category.message}
                   </span>
                 )}
               </div>
@@ -412,10 +801,10 @@ function AdminProducts() {
                   type="number"
                   min="0"
                   step="1"
-                  {...register('price')}
+                  {...registerEdit('price')}
                 />
-                {errors.price && (
-                  <span className={styles.fieldError}>{errors.price.message}</span>
+                {editErrors.price && (
+                  <span className={styles.fieldError}>{editErrors.price.message}</span>
                 )}
               </div>
 
@@ -428,10 +817,10 @@ function AdminProducts() {
                   type="number"
                   min="0"
                   step="1"
-                  {...register('stock')}
+                  {...registerEdit('stock')}
                 />
-                {errors.stock && (
-                  <span className={styles.fieldError}>{errors.stock.message}</span>
+                {editErrors.stock && (
+                  <span className={styles.fieldError}>{editErrors.stock.message}</span>
                 )}
               </div>
 
@@ -439,10 +828,10 @@ function AdminProducts() {
                 <label className={styles.fieldLabel} htmlFor="product-resolution">
                   Роздільна здатність
                 </label>
-                <input id="product-resolution" {...register('resolution')} />
-                {errors.resolution && (
+                <input id="product-resolution" {...registerEdit('resolution')} />
+                {editErrors.resolution && (
                   <span className={styles.fieldError}>
-                    {errors.resolution.message}
+                    {editErrors.resolution.message}
                   </span>
                 )}
               </div>
@@ -451,13 +840,33 @@ function AdminProducts() {
                 <label className={styles.fieldLabel} htmlFor="product-amenities">
                   Переваги через кому
                 </label>
-                <input id="product-amenities" {...register('amenities')} />
-                {errors.amenities && (
+                <input id="product-amenities" {...registerEdit('amenities')} />
+                {editErrors.amenities && (
                   <span className={styles.fieldError}>
-                    {errors.amenities.message}
+                    {editErrors.amenities.message}
                   </span>
                 )}
               </div>
+            </div>
+
+            <div className={styles.modalField}>
+              <label className={styles.fieldLabel} htmlFor="product-image-path">
+                Шлях до фото
+              </label>
+              <input
+                id="product-image-path"
+                placeholder="/catalog-images/example.png"
+                {...registerEdit('imagePath')}
+              />
+              {editErrors.imagePath && (
+                <span className={styles.fieldError}>
+                  {editErrors.imagePath.message}
+                </span>
+              )}
+              <p className={styles.helperText}>
+                Для нових локальних фото використовуй шлях із папки
+                `public/catalog-images`.
+              </p>
             </div>
 
             <div className={styles.modalField}>
@@ -467,11 +876,11 @@ function AdminProducts() {
               <textarea
                 id="product-description"
                 className={styles.textarea}
-                {...register('description')}
+                {...registerEdit('description')}
               />
-              {errors.description && (
+              {editErrors.description && (
                 <span className={styles.fieldError}>
-                  {errors.description.message}
+                  {editErrors.description.message}
                 </span>
               )}
             </div>
@@ -484,8 +893,11 @@ function AdminProducts() {
               >
                 Скасувати
               </Button>
-              <Button type="submit" disabled={isSubmitting || updateProductMutation.isPending}>
-                {isSubmitting || updateProductMutation.isPending
+              <Button
+                type="submit"
+                disabled={isEditFormSubmitting || updateProductMutation.isPending}
+              >
+                {isEditFormSubmitting || updateProductMutation.isPending
                   ? 'Збереження...'
                   : 'Зберегти зміни'}
               </Button>

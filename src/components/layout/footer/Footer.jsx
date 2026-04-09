@@ -9,7 +9,7 @@ import Logo from '@shared/Logo/Logo'
 import { Link } from 'react-router-dom'
 
 //constants
-import { ROUTES } from '@constants/routes' // Або твій аліас для констант, якщо є
+import { ROUTES } from '@constants/routes'
 import { CONTACTS } from '@constants/contacts'
 
 function Footer() {
@@ -46,7 +46,7 @@ function Footer() {
             <div className={styles.linkGroup}>
               <h4 className={styles.title}>Клієнтам</h4>
               <nav className={styles.nav}>
-                <Link to={ROUTES.FAQ}>Часті питання (FAQ)</Link>
+                <Link to={ROUTES.FAQ}>Часті питання</Link>
                 <Link to={ROUTES.DELIVERY}>Доставка та оплата</Link>
                 <Link to={ROUTES.PRIVACY}>Політика конфіденційності</Link>
               </nav>
@@ -56,7 +56,7 @@ function Footer() {
 
         <div className={styles.bottom}>
           <p>© {currentYear} SecureCam. Всі права захищені.</p>
-          <p>Розроблено з любов'ю до безпеки</p>
+          <p>Створено з турботою про безпеку</p>
         </div>
       </Container>
     </footer>

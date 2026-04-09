@@ -9,6 +9,7 @@ import toast from 'react-hot-toast'
 // components
 import Button from '@ui/button/Button'
 import Container from '@layout/container/Container'
+import { formatCurrency } from '@utils/formatCurrency'
 
 // icons
 import {
@@ -58,7 +59,7 @@ const DEVICE_PRICES = {
 }
 
 function Calculator() {
-  const dispatch = useDispatch() // Ініціалізуємо dispatch
+  const dispatch = useDispatch()
 
   const [tier, setTier] = useState(TIERS[1].id)
   const [cameras, setCameras] = useState(2)
@@ -89,10 +90,8 @@ function Calculator() {
       name: `Комплект безпеки "${currentTier.name}"`,
       price: totalPrice,
       category: 'Готові рішення',
-
       imgPath: '/src/assets/images/placeholder.png',
       quantity: 1,
-
       configDetails: {
         hub: currentTier.name,
         cameras,
@@ -135,7 +134,9 @@ function Calculator() {
                         <h3>{t.name}</h3>
                         <p>{t.desc}</p>
                       </div>
-                      <span className={styles.tierPrice}>${t.basePrice}</span>
+                      <span className={styles.tierPrice}>
+                        {formatCurrency(t.basePrice)}
+                      </span>
                       {isActive && (
                         <div className={styles.activeCheck}>
                           <Check size={16} />
@@ -156,9 +157,9 @@ function Calculator() {
                       <Camera size={20} />
                     </div>
                     <div>
-                      <p className={styles.deviceName}>IP Камери</p>
+                      <p className={styles.deviceName}>IP камери</p>
                       <span className={styles.devicePrice}>
-                        +${DEVICE_PRICES.camera}/шт
+                        +{formatCurrency(DEVICE_PRICES.camera)}/шт
                       </span>
                     </div>
                   </div>
@@ -189,7 +190,7 @@ function Calculator() {
                         Датчики руху/відкриття
                       </p>
                       <span className={styles.devicePrice}>
-                        +${DEVICE_PRICES.sensor}/шт
+                        +{formatCurrency(DEVICE_PRICES.sensor)}/шт
                       </span>
                     </div>
                   </div>
@@ -232,7 +233,9 @@ function Calculator() {
                         />
                       </div>
                       <span className={styles.extraName}>{extra.name}</span>
-                      <span className={styles.extraPrice}>+${extra.price}</span>
+                      <span className={styles.extraPrice}>
+                        +{formatCurrency(extra.price)}
+                      </span>
                     </label>
                   )
                 })}
@@ -245,27 +248,27 @@ function Calculator() {
             <div className={styles.summaryContent}>
               <div className={styles.summaryRow}>
                 <span>Хаб ({currentTier.name})</span>
-                <span>${tierPrice}</span>
+                <span>{formatCurrency(tierPrice)}</span>
               </div>
 
               {cameras > 0 && (
                 <div className={styles.summaryRow}>
                   <span className={styles.subText}>Камери (x{cameras})</span>
-                  <span>${cameras * DEVICE_PRICES.camera}</span>
+                  <span>{formatCurrency(cameras * DEVICE_PRICES.camera)}</span>
                 </div>
               )}
 
               {sensors > 0 && (
                 <div className={styles.summaryRow}>
                   <span className={styles.subText}>Датчики (x{sensors})</span>
-                  <span>${sensors * DEVICE_PRICES.sensor}</span>
+                  <span>{formatCurrency(sensors * DEVICE_PRICES.sensor)}</span>
                 </div>
               )}
 
               {extrasPrice > 0 && (
                 <div className={styles.summaryRow}>
                   <span className={styles.subText}>Додаткові опції</span>
-                  <span>${extrasPrice}</span>
+                  <span>{formatCurrency(extrasPrice)}</span>
                 </div>
               )}
 
@@ -273,14 +276,14 @@ function Calculator() {
 
               <div className={styles.totalRow}>
                 <span>Загальна вартість:</span>
-                <span>${totalPrice}</span>
+                <span>{formatCurrency(totalPrice)}</span>
               </div>
 
               <Button fullWidth onClick={handleAddKitToCart}>
                 ДОДАТИ КОМПЛЕКТ У КОШИК
               </Button>
               <p className={styles.guarantee}>
-                💳 Безпечна оплата. Гарантія 2 роки.
+                Безпечна оплата. Гарантія 2 роки.
               </p>
             </div>
           </aside>

@@ -11,7 +11,7 @@ function UserOverview({ user }) {
   const [isOpen, setIsOpen] = useState(false)
   const {
     displayName = 'Користувач',
-    email = 'Email не вказано',
+    email = 'Електронна пошта не вказана',
     photoURL,
     uid,
     phone,
@@ -36,7 +36,7 @@ function UserOverview({ user }) {
 
           <div className={styles.details}>
             <p>
-              <strong>Email:</strong> {email}
+              <strong>Електронна пошта:</strong> {email}
             </p>
 
             <p>

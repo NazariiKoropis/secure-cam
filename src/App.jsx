@@ -8,6 +8,10 @@ import CatalogDetails from '@pages/catalog-details/CatalogDetails'
 import Calculator from '@pages/calculator/Calculator'
 import NotFound from '@pages/not-found/NotFound'
 import Cart from '@pages/cart/Cart'
+import About from '@pages/about/About'
+import Faq from '@pages/faq/Faq'
+import Delivery from '@pages/delivery/Delivery'
+import Privacy from '@pages/privacy/Privacy'
 
 //pages protected
 import Admin from '@pages/admin/Admin'
@@ -45,6 +49,10 @@ function App() {
           <Route path={ROUTES.CATALOG} element={<Catalog />} />
           <Route path={ROUTES.CATALOG_ITEM} element={<CatalogDetails />} />
           <Route path={ROUTES.CALCULATOR} element={<Calculator />} />
+          <Route path={ROUTES.ABOUT} element={<About />} />
+          <Route path={ROUTES.FAQ} element={<Faq />} />
+          <Route path={ROUTES.DELIVERY} element={<Delivery />} />
+          <Route path={ROUTES.PRIVACY} element={<Privacy />} />
 
           <Route element={<ProtectedRoute />}>
             <Route path={ROUTES.USER} element={<User />} />

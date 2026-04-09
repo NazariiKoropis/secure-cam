@@ -13,6 +13,7 @@ import ErrorMessage from '@shared/error-message/ErrorMessage'
 
 //utils
 import { getDate } from '@utils/getDate'
+import { formatCurrency } from '@utils/formatCurrency'
 
 //icons
 import { Package, Clock } from 'lucide-react'
@@ -129,7 +130,7 @@ function UserOrders({ uid }) {
                     {order.delivery?.address}
                   </p>
                   <div className={styles.totalPrice}>
-                    Разом: <span>${order.totalPrice}</span>
+                    Разом: <span>{formatCurrency(order.totalPrice)}</span>
                   </div>
                 </div>
               </article>

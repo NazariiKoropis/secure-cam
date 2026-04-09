@@ -13,6 +13,7 @@ import Button from '@ui/button/Button'
 import Container from '@layout/container/Container'
 import AuthModal from '@shared/auth-modal/AuthModal'
 import OrderModal from '@shared/order-modal/OrderModal'
+import { formatCurrency } from '@utils/formatCurrency'
 
 // icons
 import { Trash2, Check } from 'lucide-react'
@@ -66,7 +67,7 @@ function Cart() {
     return (
       <Container>
         <section className={styles.emptyCart}>
-          <h2>Ваш кошик порожній 🛒</h2>
+          <h2>Ваш кошик порожній</h2>
           <p>Ви ще не додали жодного товару. Час це виправити!</p>
           <Link to="/catalog">
             <Button>ПЕРЕЙТИ ДО КАТАЛОГУ</Button>
@@ -98,12 +99,12 @@ function Cart() {
                   </div>
 
                   <div className={styles.itemPrice}>
-                    <p>${item.price}</p>
+                    <p>{formatCurrency(item.price)}</p>
                     <span>x {item.quantity} шт.</span>
                   </div>
 
                   <div className={styles.itemTotal}>
-                    <p>${Number(item.price) * item.quantity}</p>
+                    <p>{formatCurrency(Number(item.price) * item.quantity)}</p>
                   </div>
 
                   <button
@@ -141,7 +142,7 @@ function Cart() {
                       </div>
                       <div className={styles.serviceInfo}>
                         <p>{service.name}</p>
-                        <span>+${service.price}</span>
+                        <span>+{formatCurrency(service.price)}</span>
                       </div>
                     </label>
                   )
@@ -155,13 +156,13 @@ function Cart() {
 
             <div className={styles.summaryRow}>
               <span>Товари ({items.length}):</span>
-              <span>${itemsTotalPrice}</span>
+              <span>{formatCurrency(itemsTotalPrice)}</span>
             </div>
 
             {servicesTotalPrice > 0 && (
               <div className={styles.summaryRow}>
                 <span>Дод. послуги:</span>
-                <span>+${servicesTotalPrice}</span>
+                <span>+{formatCurrency(servicesTotalPrice)}</span>
               </div>
             )}
 
@@ -174,7 +175,7 @@ function Cart() {
 
             <div className={styles.summaryTotal}>
               <span>Всього до сплати:</span>
-              <span>${finalTotal}</span>
+              <span>{formatCurrency(finalTotal)}</span>
             </div>
 
             <Button onClick={() => setIsOpen(true)} fullWidth>

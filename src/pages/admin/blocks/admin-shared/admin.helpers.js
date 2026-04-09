@@ -1,11 +1,8 @@
-export const LOW_STOCK_LIMIT = 5
+import { formatCurrency } from '@utils/formatCurrency'
 
-export const formatCurrency = (value) =>
-  new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    maximumFractionDigits: 0,
-  }).format(Number(value) || 0)
+export { formatCurrency }
+
+export const LOW_STOCK_LIMIT = 5
 
 export const getTimestampValue = (value) => {
   if (!value) return 0

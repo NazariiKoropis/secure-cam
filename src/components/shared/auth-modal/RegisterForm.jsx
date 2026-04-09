@@ -92,7 +92,7 @@ function RegisterForm({ onSuccess }) {
 
       <Input
         type="email"
-        label="Email"
+        label="Електронна пошта"
         {...register('email')}
         error={errors.email?.message}
       />

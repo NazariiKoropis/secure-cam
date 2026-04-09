@@ -26,7 +26,7 @@ function RangeInput({
   value = [0, 2000],
   onChange,
   step = 1,
-  label = 'Ціна ($)',
+  label = 'Ціна (грн)',
 }) {
   const safeMax = max > min ? max : min + step
   const normalizedValue = useMemo(

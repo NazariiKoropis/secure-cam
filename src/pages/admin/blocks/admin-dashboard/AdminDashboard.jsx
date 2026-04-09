@@ -16,6 +16,7 @@ import { getAllReviews } from '@api/reviews.service'
 import { ADMIN_ROUTES } from '@constants/routes'
 
 import { getDate } from '@utils/getDate'
+import { formatCurrency } from '@utils/formatCurrency'
 
 import {
   ArrowRight,
@@ -31,13 +32,6 @@ import {
 const LOW_STOCK_LIMIT = 5
 const RECENT_ORDERS_LIMIT = 4
 const RECENT_REVIEWS_LIMIT = 3
-
-const formatCurrency = (value) =>
-  new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    maximumFractionDigits: 0,
-  }).format(Number(value) || 0)
 
 const getTimestampValue = (value) => {
   if (!value) return 0

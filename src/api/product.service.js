@@ -1,5 +1,5 @@
 //database
-import { doc, getDoc, collection, getDocs, updateDoc } from "firebase/firestore";
+import { doc, getDoc, collection, getDocs, updateDoc, addDoc } from "firebase/firestore";
 import { database } from './../config/firebase';
 
 import { COLLECTIONS } from "@constants/collections"
@@ -71,6 +71,20 @@ export const getAllProductsCategory = async () => {
         return Array.from(categories);
     } catch (error) {
         console.error('Error fetching data from server', error);
+        return null;
+    }
+}
+
+export const createProduct = async (payload) => {
+    try {
+        const productRef = await addDoc(collection(database, COLLECTIONS.PRODUCTS), {
+            ...payload,
+            createdAt: new Date(),
+        });
+
+        return productRef.id;
+    } catch (error) {
+        console.error('Error creating product on server', error);
         return null;
     }
 }
