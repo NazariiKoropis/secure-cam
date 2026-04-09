@@ -1,5 +1,13 @@
 
-import { collection, addDoc, getDocs, where, query } from "firebase/firestore";
+import {
+    collection,
+    addDoc,
+    getDocs,
+    where,
+    query,
+    doc,
+    updateDoc,
+} from "firebase/firestore";
 import { database } from './../config/firebase';
 import { COLLECTIONS } from "@constants/collections"
 
@@ -33,6 +41,37 @@ export const getOrdersByUserId = async (uid) => {
         return orders;
     } catch (error) {
         console.error('Error fetching orders from server', error);
+        return null;
+    }
+}
+
+export const getAllOrders = async () => {
+    try {
+        const querySnapshot = await getDocs(collection(database, COLLECTIONS.ORDERS));
+
+        const orders = querySnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data(),
+        }));
+
+        return orders;
+    } catch (error) {
+        console.error('Error fetching all orders from server', error);
+        return null;
+    }
+}
+
+export const updateOrderStatus = async (orderId, status) => {
+    try {
+        const orderRef = doc(database, COLLECTIONS.ORDERS, orderId);
+
+        await updateDoc(orderRef, {
+            status,
+        });
+
+        return true;
+    } catch (error) {
+        console.error('Error updating order status on server', error);
         return null;
     }
 }

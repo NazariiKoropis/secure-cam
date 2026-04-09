@@ -1,0 +1,337 @@
+@use "@styles/variables" as *;
+@use "@styles/mixins" as *;
+
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding-bottom: 40px;
+}
+
+.hero {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 28px;
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius-lg;
+    background:
+        radial-gradient(circle at top left, rgba(14, 165, 233, 0.16), transparent 30%),
+        linear-gradient(135deg, #ffffff, #f4f8ff);
+
+    @include tablet {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+.heroContent {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 740px;
+}
+
+.eyebrow,
+.panelEyebrow {
+    display: inline-flex;
+    width: fit-content;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background-color: rgba(37, 99, 235, 0.1);
+    color: var(--accent-primary);
+    font-size: 0.85rem;
+    font-weight: $fw-semibold;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.title {
+    margin: 0;
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    line-height: 1.1;
+    color: var(--text-primary);
+}
+
+.subtitle {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.heroActions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.metricsGrid,
+.summaryGrid,
+.contentGrid {
+    display: grid;
+    gap: 20px;
+}
+
+.metricsGrid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    @include laptop {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @include mobile {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+.summaryGrid,
+.contentGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    @include laptop {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+.metricCard,
+.panel {
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius-lg;
+    background-color: #fff;
+    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.05);
+}
+
+.metricCard {
+    padding: 22px;
+}
+
+.metricIcon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 16px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.12), rgba(14, 165, 233, 0.16));
+    color: var(--accent-primary);
+}
+
+.metricLabel {
+    margin: 0 0 8px;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.metricValue {
+    margin: 0 0 10px;
+    color: var(--text-primary);
+    font-size: clamp(1.8rem, 2vw, 2.35rem);
+    line-height: 1.1;
+}
+
+.metricHint {
+    margin: 0;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.panel {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 24px;
+}
+
+.panelHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    color: var(--text-secondary);
+}
+
+.panelTitle {
+    margin: 10px 0 0;
+    color: var(--text-primary);
+    font-size: 1.3rem;
+}
+
+.panelLink {
+    color: var(--accent-primary);
+    font-weight: $fw-semibold;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.statusList,
+.inventoryList,
+.ordersList,
+.reviewsList {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.statusItem,
+.inventoryItem {
+    display: grid;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: 16px;
+    background-color: var(--bg-surface);
+}
+
+.statusItem {
+    grid-template-columns: auto 1fr auto;
+}
+
+.statusDot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.statusDotwarning {
+    background-color: #f59e0b;
+}
+
+.statusDotsuccess {
+    background-color: #10b981;
+}
+
+.statusDotdanger {
+    background-color: #ef4444;
+}
+
+.statusLabel,
+.inventoryMeta,
+.orderMeta,
+.reviewDate,
+.orderInfoRow {
+    color: var(--text-secondary);
+}
+
+.statusValue,
+.inventoryStock {
+    color: var(--text-primary);
+}
+
+.inventoryItem {
+    grid-template-columns: 1fr auto;
+}
+
+.inventoryTitle,
+.orderTitle,
+.reviewAuthor {
+    margin: 0 0 6px;
+    color: var(--text-primary);
+    font-size: 1rem;
+}
+
+.inventoryMeta,
+.orderMeta,
+.reviewDate {
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+.emptyPanel {
+    padding: 18px;
+    border-radius: 16px;
+    border: 1px dashed var(--border-color);
+    background-color: var(--bg-surface);
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.orderCard,
+.reviewCard {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 18px;
+    border-radius: 18px;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    background:
+        linear-gradient(180deg, rgba(248, 250, 252, 0.9), rgba(255, 255, 255, 1));
+}
+
+.orderTop,
+.reviewTop,
+.orderInfoRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    @include mobile {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+.orderInfoRow {
+    flex-wrap: wrap;
+    font-size: 0.95rem;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: $fw-semibold;
+}
+
+.badgewarning {
+    background-color: rgba(245, 158, 11, 0.12);
+    color: #b45309;
+}
+
+.badgesuccess {
+    background-color: rgba(16, 185, 129, 0.12);
+    color: #047857;
+}
+
+.badgedanger {
+    background-color: rgba(239, 68, 68, 0.12);
+    color: #b91c1c;
+}
+
+.badgeWarning {
+    background-color: rgba(245, 158, 11, 0.12);
+    color: #b45309;
+}
+
+.badgeSuccess {
+    background-color: rgba(16, 185, 129, 0.12);
+    color: #047857;
+}
+
+.reviewRating {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #d97706;
+    font-weight: $fw-semibold;
+}
+
+.reviewText {
+    margin: 0;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
