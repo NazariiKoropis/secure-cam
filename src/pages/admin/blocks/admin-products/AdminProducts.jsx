@@ -15,6 +15,7 @@ import {
   createProduct,
   getAllProducts,
   updateProductById,
+  deleteProductById,
 } from '@api/product.service'
 
 import { getImage } from '@utils/getImage'
@@ -270,6 +271,30 @@ function AdminProducts() {
     },
     onError: () => {
       toast.error('Не вдалося зберегти зміни товару.')
+    },
+  })
+
+  const deleteProductMutation = useMutation({
+    mutationFn: async (id) => {
+      const result = await deleteProductById(id)
+
+      if (!result) {
+        throw new Error('Failed to delete product')
+      }
+
+      return result
+    },
+    onSuccess: async () => {
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ['admin', 'products'] }),
+        queryClient.invalidateQueries({ queryKey: ['admin', 'dashboard'] }),
+        queryClient.invalidateQueries({ queryKey: ['products'] }),
+      ])
+
+      toast.success('Товар видалено.')
+    },
+    onError: () => {
+      toast.error('Не вдалося видалити товар.')
     },
   })
 
@@ -546,6 +571,21 @@ function AdminProducts() {
                     <div className={styles.actionsRow}>
                       <Button onClick={() => setSelectedProduct(product)}>
                         Редагувати товар
+                      </Button>
+                      <Button
+                        variant="error"
+                        onClick={() => {
+                          const shouldDelete = window.confirm(
+                            `Видалити товар "${product.name}" без можливості відновлення?`,
+                          )
+
+                          if (!shouldDelete) return
+
+                          deleteProductMutation.mutate(product.id)
+                        }}
+                        disabled={deleteProductMutation.isPending}
+                      >
+                        Видалити
                       </Button>
                     </div>
                   </article>

@@ -1,5 +1,13 @@
 //database
-import { doc, getDoc, collection, getDocs, updateDoc, addDoc } from "firebase/firestore";
+import {
+    doc,
+    getDoc,
+    collection,
+    getDocs,
+    updateDoc,
+    addDoc,
+    deleteDoc,
+} from "firebase/firestore";
 import { database } from './../config/firebase';
 
 import { COLLECTIONS } from "@constants/collections"
@@ -98,6 +106,19 @@ export const updateProductById = async (id, payload) => {
         return true;
     } catch (error) {
         console.error('Error updating product on server', error);
+        return null;
+    }
+}
+
+export const deleteProductById = async (id) => {
+    try {
+        const productRef = doc(database, COLLECTIONS.PRODUCTS, id);
+
+        await deleteDoc(productRef);
+
+        return true;
+    } catch (error) {
+        console.error('Error deleting product on server', error);
         return null;
     }
 }
