@@ -17,10 +17,18 @@ import { formatCurrency } from '@utils/formatCurrency'
 // router-dom
 import { useNavigate } from 'react-router-dom'
 
+// redux
+import { useDispatch } from 'react-redux'
+import { addItem } from '@redux/cart/cartSlice'
+
+// toast
+import toast from 'react-hot-toast'
+
 function TechCard({ item }) {
   const { id, name, price, amenities = [], imagePath } = item
   const img = getImage(imagePath || id)
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const onTechCardClick = () => {
     navigate(`${ROUTES.CATALOG}/${id}`)
@@ -28,7 +36,8 @@ function TechCard({ item }) {
 
   const onAddItemClick = (event) => {
     event.stopPropagation()
-    alert('Додано до кошика')
+    dispatch(addItem({ id, name, price, imagePath, quantity: 1 }))
+    toast.success(`${name} додано до кошика`)
   }
 
   const onKeyDown = (event) => {
