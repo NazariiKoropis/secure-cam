@@ -16,7 +16,7 @@ import OrderModal from '@shared/order-modal/OrderModal'
 import { formatCurrency } from '@utils/formatCurrency'
 
 // icons
-import { Trash2, Check } from 'lucide-react'
+import { Trash2, Check, Square } from 'lucide-react'
 
 const ADDITIONAL_SERVICES = [
   { id: 'install', name: 'Професійне встановлення', price: 50 },
@@ -132,7 +132,11 @@ function Cart() {
                       }`}
                     >
                       <div className={styles.checkbox}>
-                        {isSelected && <Check size={16} strokeWidth={3} />}
+                        {isSelected ? (
+                          <Check size={16} strokeWidth={3} />
+                        ) : (
+                          <Square size={16} strokeWidth={3} />
+                        )}
                         <input
                           type="checkbox"
                           checked={isSelected}
