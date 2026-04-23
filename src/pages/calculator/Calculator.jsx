@@ -28,34 +28,34 @@ const TIERS = [
     id: 'basic',
     name: 'Базовий',
     desc: 'Мінімальний захист',
-    basePrice: 200,
+    basePrice: 5000,
     icon: Wifi,
   },
   {
     id: 'pro',
     name: 'Просунутий',
     desc: 'Оптимальний вибір',
-    basePrice: 450,
+    basePrice: 10000,
     icon: Shield,
   },
   {
     id: 'premium',
     name: 'Преміум',
     desc: 'Усе включено',
-    basePrice: 850,
+    basePrice: 20000,
     icon: Zap,
   },
 ]
 
 const EXTRAS = [
-  { id: 'install', name: 'Професійний монтаж', price: 150 },
-  { id: 'ups', name: 'Блок безперебійного живлення', price: 80 },
-  { id: 'cloud', name: 'Хмарний архів записів (1 рік)', price: 60 },
+  { id: 'install', name: 'Професійний монтаж', price: 2000 },
+  { id: 'ups', name: 'Блок безперебійного живлення', price: 3000 },
+  { id: 'cloud', name: 'Хмарний архів записів (1 рік)', price: 5000 },
 ]
 
 const DEVICE_PRICES = {
-  camera: 65,
-  sensor: 25,
+  camera: 2500,
+  sensor: 2000,
 }
 
 function Calculator() {
@@ -221,9 +221,15 @@ function Calculator() {
                   return (
                     <label
                       key={extra.id}
-                      className={`${styles.extraCard} ${isChecked ? styles.active : ''}`}
+                      className={`${styles.extraCard} ${
+                        isChecked ? styles.extraCardActive : ''
+                      }`}
                     >
-                      <div className={styles.checkbox}>
+                      <div
+                        className={`${styles.checkbox} ${
+                          isChecked ? styles.checkboxActive : ''
+                        }`}
+                      >
                         {isChecked && <Check size={16} strokeWidth={3} />}
                         <input
                           type="checkbox"

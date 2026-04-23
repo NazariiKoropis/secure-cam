@@ -216,37 +216,37 @@
     &:hover {
         border-color: var(--text-secondary);
     }
+}
 
-    &.active {
-        border-color: var(--accent-primary);
-    }
+.extraCardActive {
+    border-color: var(--accent-primary);
+}
 
-    .checkbox {
-        width: 24px;
-        height: 24px;
-        border-radius: 6px;
-        border: 2px solid var(--border-color);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: white;
-        transition: all 0.2s;
+.checkbox {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    border: 2px solid var(--border-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    transition: all 0.2s;
+}
 
-        .active & {
-            background-color: var(--accent-primary);
-            border-color: var(--accent-primary);
-        }
-    }
+.checkboxActive {
+    background-color: var(--accent-primary);
+    border-color: var(--accent-primary);
+}
 
-    .extraName {
-        flex: 1;
-        font-weight: $fw-medium;
-    }
+.extraName {
+    flex: 1;
+    font-weight: $fw-medium;
+}
 
-    .extraPrice {
-        font-weight: $fw-bold;
-        color: var(--text-primary);
-    }
+.extraPrice {
+    font-weight: $fw-bold;
+    color: var(--text-primary);
 }
 
 .summaryPanel {

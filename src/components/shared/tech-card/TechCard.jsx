@@ -36,7 +36,7 @@ function TechCard({ item }) {
 
   const onAddItemClick = (event) => {
     event.stopPropagation()
-    dispatch(addItem({ id, name, price, imagePath, quantity: 1 }))
+    dispatch(addItem({ id, name, price, imgPath: img, quantity: 1 }))
     toast.success(`${name} додано до кошика`)
   }
 

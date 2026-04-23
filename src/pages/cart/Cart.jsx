@@ -19,9 +19,9 @@ import { formatCurrency } from '@utils/formatCurrency'
 import { Trash2, Check, Square } from 'lucide-react'
 
 const ADDITIONAL_SERVICES = [
-  { id: 'install', name: 'Професійне встановлення', price: 50 },
-  { id: 'setup', name: 'Налаштування та запуск', price: 20 },
-  { id: 'warranty', name: 'Розширена гарантія (+1 рік)', price: 30 },
+  { id: 'install', name: 'Професійне встановлення', price: 5000 },
+  { id: 'setup', name: 'Налаштування та запуск', price: 2000 },
+  { id: 'warranty', name: 'Розширена гарантія (+1 рік)', price: 1500 },
 ]
 
 function Cart() {
@@ -29,9 +29,8 @@ function Cart() {
   const { currentUser } = useSelector((state) => state.user)
 
   const [isOpen, setIsOpen] = useState(false)
-  const dispatch = useDispatch()
-
   const [selectedServices, setSelectedServices] = useState([])
+  const dispatch = useDispatch()
 
   const toggleService = (serviceId) => {
     setSelectedServices((prev) =>
@@ -58,7 +57,7 @@ function Cart() {
   const finalTotal = itemsTotalPrice + servicesTotalPrice
 
   const orderPayload = {
-    items: items,
+    items,
     services: selectedServicesData,
     totalPrice: finalTotal,
   }
@@ -87,36 +86,42 @@ function Cart() {
         <div className={styles.cartLayout}>
           <div className={styles.leftColumn}>
             <div className={styles.itemsList}>
-              {items.map((item) => (
-                <div key={item.id} className={styles.cartItem}>
-                  <div className={styles.imageWrapper}>
-                    <img src={item.imgPath} alt={item.name} />
-                  </div>
+              {items.map((item) => {
+                const itemImage = item.imgPath || item.img
 
-                  <div className={styles.itemInfo}>
-                    <h3>{item.name}</h3>
-                    <p className={styles.category}>{item.category}</p>
-                  </div>
+                return (
+                  <div key={item.id} className={styles.cartItem}>
+                    <div className={styles.imageWrapper}>
+                      {itemImage && <img src={itemImage} alt={item.name} />}
+                    </div>
 
-                  <div className={styles.itemPrice}>
-                    <p>{formatCurrency(item.price)}</p>
-                    <span>x {item.quantity} шт.</span>
-                  </div>
+                    <div className={styles.itemInfo}>
+                      <h3>{item.name}</h3>
+                      <p className={styles.category}>{item.category}</p>
+                    </div>
 
-                  <div className={styles.itemTotal}>
-                    <p>{formatCurrency(Number(item.price) * item.quantity)}</p>
-                  </div>
+                    <div className={styles.itemPrice}>
+                      <p>{formatCurrency(item.price)}</p>
+                      <span>x {item.quantity} шт.</span>
+                    </div>
 
-                  <button
-                    type="button"
-                    className={styles.deleteBtn}
-                    onClick={() => dispatch(removeItem(item.id))}
-                    aria-label="Видалити товар"
-                  >
-                    <Trash2 size={24} />
-                  </button>
-                </div>
-              ))}
+                    <div className={styles.itemTotal}>
+                      <p>
+                        {formatCurrency(Number(item.price) * item.quantity)}
+                      </p>
+                    </div>
+
+                    <button
+                      type="button"
+                      className={styles.deleteBtn}
+                      onClick={() => dispatch(removeItem(item.id))}
+                      aria-label="Видалити товар"
+                    >
+                      <Trash2 size={24} />
+                    </button>
+                  </div>
+                )
+              })}
             </div>
 
             <div className={styles.servicesBlock}>
@@ -124,6 +129,7 @@ function Cart() {
               <div className={styles.servicesList}>
                 {ADDITIONAL_SERVICES.map((service) => {
                   const isSelected = selectedServices.includes(service.id)
+
                   return (
                     <label
                       key={service.id}
